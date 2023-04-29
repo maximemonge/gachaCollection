@@ -3,9 +3,8 @@ package com.mmonge.game.gacha.services.impl;
 import com.mmonge.game.gacha.mapper.ObjetCollectionMapper;
 import com.mmonge.game.gacha.model.dto.ObjetCollectionDTO;
 import com.mmonge.game.gacha.services.ObjetCollectionService;
-import com.mmonge.game.gacha.services.dao.ObjetCollectionRepository;
+import com.mmonge.game.gacha.services.impl.repository.ObjetCollectionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

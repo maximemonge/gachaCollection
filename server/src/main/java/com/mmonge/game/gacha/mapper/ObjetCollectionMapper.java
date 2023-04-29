@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,7 +23,7 @@ public class ObjetCollectionMapper {
     public List<ObjetCollectionDTO> objetCollectionEntityToDtos(List<ObjetCollectionEntity> entities) {
         List<ObjetCollectionDTO> dtos = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(entities)) {
-            dtos = entities.stream().map(this::objetCollectionEntityToDto).collect(Collectors.toList());
+            dtos = entities.stream().filter(Objects::nonNull).map(this::objetCollectionEntityToDto).collect(Collectors.toList());
         }
         return dtos;
     }

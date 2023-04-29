@@ -1,25 +1,29 @@
 package com.mmonge.game.gacha.model.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
 
 @Entity
 @Table(name = "OBJET_A_COLLECTIONNER")
+@Getter
+@Setter
 public class ObjetCollectionEntity implements Serializable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "ID")
+    @Column(name = "oac_id")
     private Long id;
 
-    @Column(name = "CODE")
-    private Long code;
+    @Column(name = "oac_code")
+    private String code;
 
-    @Column(name = "RARETE")
+    @Column(name = "oac_rarete")
     private String rarete;
 
-    @OneToOne(optional = true, fetch = FetchType.LAZY)
-    @Column(name = "IMAGE_ID")
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="oac_img_id", referencedColumnName = "img_id")
     private ImageEntity image;
 }

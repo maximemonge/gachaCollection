@@ -1,15 +1,15 @@
 CREATE TABLE IF NOT EXISTS IMAGE (
-    ID BIGINT AUTO_INCREMENT,
-    DESCRIPTION VARCHAR(100),
-    IMAGE BLOB,
-    PRIMARY KEY (ID)
+    img_id BIGINT AUTO_INCREMENT,
+    img_description VARCHAR(100),
+    img_image BLOB,
+    PRIMARY KEY (img_id)
 );
 
 CREATE TABLE IF NOT EXISTS OBJET_A_COLLECTIONNER (
-    ID BIGINT AUTO_INCREMENT,
-    CODE VARCHAR(100),
-    RARETE VARCHAR(2),
-    IMAGE_ID BIGINT,
-    PRIMARY KEY (ID),
-    CONSTRAINT fk_objet_collection_image FOREIGN KEY (IMAGE_ID) REFERENCES IMAGE(ID)
+    oac_id BIGINT AUTO_INCREMENT,
+    oac_code VARCHAR(100),
+    oac_rarete VARCHAR(2),
+    oac_img_id BIGINT,
+    PRIMARY KEY (oac_id),
+    CONSTRAINT fk_objet_collection_image FOREIGN KEY (oac_img_id) REFERENCES IMAGE(img_id)
 );

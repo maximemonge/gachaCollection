@@ -1,10 +1,12 @@
 package com.mmonge.game.gacha.model.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Getter
+@AllArgsConstructor
 public enum RareteEnum {
     C("C", "Commun", 50),
     S("S", "Peu commun", 30),
@@ -18,12 +20,6 @@ public enum RareteEnum {
     private final int pourcentage;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RareteEnum.class);
-
-    RareteEnum(String code, String libelle, int pourcentage) {
-        this.code = code;
-        this.libelle = libelle;
-        this.pourcentage = pourcentage;
-    }
 
     public static RareteEnum get(String code) {
         RareteEnum rarete = null;

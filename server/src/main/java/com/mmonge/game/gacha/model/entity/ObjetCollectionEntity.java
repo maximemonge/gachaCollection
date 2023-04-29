@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Set;
 
 
 @Entity
@@ -26,4 +27,7 @@ public class ObjetCollectionEntity implements Serializable {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="oac_img_id", referencedColumnName = "img_id")
     private ImageEntity image;
+
+    @ManyToMany(mappedBy = "objetsCollectionnes")
+    private Set<UtilisateurEntity> possesseurs;
 }

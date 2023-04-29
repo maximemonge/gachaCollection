@@ -20,6 +20,11 @@ public class ObjetCollectionServiceImpl implements ObjetCollectionService {
         return objetCollectionMapper.objetCollectionEntityToDtos(objetCollectionDaoService.findAll());
     }
 
+    @Override
+    public List<ObjetCollectionDTO> findAllByUtilisateurId(Long utilisateurId) {
+        return objetCollectionMapper.objetCollectionEntityToDtos(objetCollectionDaoService.findAllByUtilisateurId(utilisateurId));
+    }
+
     @Autowired
     public void setObjetCollectionDaoService(ObjetCollectionRepository objetCollectionDaoService) {
         this.objetCollectionDaoService = objetCollectionDaoService;

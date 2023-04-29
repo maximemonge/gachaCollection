@@ -15,12 +15,16 @@ import java.util.List;
 @RestController
 @RequestMapping(path="/objetCollection")
 public class ObjetCollectionController {
-
     private ObjetCollectionService objetCollectionService;
 
     @GetMapping(path="/all")
     public @ResponseBody ResponseEntity<List<ObjetCollectionDTO>> getAllObjetCollection() {
         return ResponseEntity.ok(objetCollectionService.findAll());
+    }
+
+    @GetMapping(path="/utilisateurCollection")
+    public @ResponseBody ResponseEntity<List<ObjetCollectionDTO>> getAllObjetCollectionByUtilisateurId(String utilisateurId) {
+        return ResponseEntity.ok(objetCollectionService.findAllByUtilisateurId(Long.valueOf(utilisateurId)));
     }
 
     @Autowired

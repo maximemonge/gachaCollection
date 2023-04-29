@@ -14,4 +14,11 @@ public interface ObjetCollectionService {
      * @return une liste d'objets de collection
      */
     List<ObjetCollectionDTO> findAll();
+
+    /**
+     * Récupère tous les objets de collection d'un utilisateur
+     * @param utilisateurId : id de l'utilisateur
+     * @return une liste d'objets de collection d'un utilisateur
+     */
+    List<ObjetCollectionDTO> findAllByUtilisateurId(Long utilisateurId);
 }

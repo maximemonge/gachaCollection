@@ -34,6 +34,6 @@ public class UtilisateurEntity implements Serializable {
     private Date dateSuppression;
 
     @ManyToMany
-    @JoinTable(name = "utilisateur_collection", joinColumns = @JoinColumn(name = "usr_id"), inverseJoinColumns = @JoinColumn(name = "oac_id"))
+    @JoinTable(name = "utilisateur_collection", joinColumns = @JoinColumn(name = "uco_usr_id"), inverseJoinColumns = @JoinColumn(name = "uco_oac_id"))
     private Set<ObjetCollectionEntity> objetsCollectionnes;
 }

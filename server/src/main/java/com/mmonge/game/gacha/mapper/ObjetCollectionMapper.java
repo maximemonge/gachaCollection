@@ -35,6 +35,7 @@ public class ObjetCollectionMapper {
             dto.setCode(entity.getCode());
             dto.setRarete(RareteEnum.get(entity.getRarete()));
             dto.setImage(imageMapper.imageEntityToDto(entity.getImage()));
+            dto.setCategorie(entity.getCategorie());
         }
         return dto;
     }

@@ -24,6 +24,9 @@ public class ObjetCollectionEntity implements Serializable {
     @Column(name = "oac_rarete")
     private String rarete;
 
+    @Column(name = "oac_categorie")
+    private String categorie;
+
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="oac_img_id", referencedColumnName = "img_id")
     private ImageEntity image;

@@ -22,7 +22,7 @@ public class ObjetCollectionController {
         return ResponseEntity.ok(objetCollectionService.findAll());
     }
 
-    @GetMapping(path="/utilisateurCollection")
+    @GetMapping(path="/all/user")
     public @ResponseBody ResponseEntity<List<ObjetCollectionDTO>> getAllObjetCollectionByUtilisateurId(String utilisateurId) {
         return ResponseEntity.ok(objetCollectionService.findAllByUtilisateurId(Long.valueOf(utilisateurId)));
     }

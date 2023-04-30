@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS OBJET_A_COLLECTIONNER (
     oac_code VARCHAR(100) NOT NULL,
     oac_rarete VARCHAR(2) NOT NULL,
     oac_img_id BIGINT NOT NULL,
+    oac_categorie VARCHAR(50) NOT NULL,
     PRIMARY KEY (oac_id),
     CONSTRAINT fk_oac_img_id FOREIGN KEY (oac_img_id) REFERENCES IMAGE(img_id) ON DELETE CASCADE
 );

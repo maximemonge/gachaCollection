@@ -15,4 +15,5 @@ public class ObjetCollectionDTO implements Serializable {
     private String code;
     private RareteEnum rarete;
     private ImageDTO image;
+    private String categorie;
 }

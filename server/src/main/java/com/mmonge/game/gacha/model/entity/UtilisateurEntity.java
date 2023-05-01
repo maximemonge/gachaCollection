@@ -18,8 +18,8 @@ public class UtilisateurEntity implements Serializable {
     @Column(name = "usr_id")
     private Long id;
 
-    @Column(name = "usr_pseudo")
-    private String pseudo;
+    @Column(name = "usr_identifiant")
+    private String identifiant;
 
     @Column(name = "usr_mot_de_passe")
     private String motDePasse;

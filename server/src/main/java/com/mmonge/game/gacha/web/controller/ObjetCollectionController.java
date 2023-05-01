@@ -5,15 +5,13 @@ import com.mmonge.game.gacha.services.ObjetCollectionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(path="/objetCollection")
+@CrossOrigin(origins = "http://localhost:8080")
 public class ObjetCollectionController {
     private ObjetCollectionService objetCollectionService;
 
@@ -22,8 +20,8 @@ public class ObjetCollectionController {
         return ResponseEntity.ok(objetCollectionService.findAll());
     }
 
-    @GetMapping(path="/all/user")
-    public @ResponseBody ResponseEntity<List<ObjetCollectionDTO>> getAllObjetCollectionByUtilisateurId(String utilisateurId) {
+    @GetMapping(path="/all/user/{utilisateurId}")
+    public @ResponseBody ResponseEntity<List<ObjetCollectionDTO>> getAllObjetCollectionByUtilisateurId(@PathVariable String utilisateurId) {
         return ResponseEntity.ok(objetCollectionService.findAllByUtilisateurId(Long.valueOf(utilisateurId)));
     }
 

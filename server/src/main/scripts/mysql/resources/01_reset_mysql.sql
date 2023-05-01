@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS OBJET_A_COLLECTIONNER (
 
 CREATE TABLE IF NOT EXISTS UTILISATEUR (
     usr_id BIGINT AUTO_INCREMENT NOT NULL,
-    usr_pseudo VARCHAR(50) NOT NULL,
+    usr_identifiant VARCHAR(50) NOT NULL,
     usr_mot_de_passe VARCHAR(512) NOT NULL,
     usr_date_creation DATETIME NOT NULL,
     usr_date_modification DATETIME NOT NULL,

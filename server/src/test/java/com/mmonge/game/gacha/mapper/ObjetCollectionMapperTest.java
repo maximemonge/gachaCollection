@@ -1,6 +1,5 @@
 package com.mmonge.game.gacha.mapper;
 
-import com.mmonge.game.gacha.model.dto.ImageDTO;
 import com.mmonge.game.gacha.model.dto.ObjetCollectionDTO;
 import com.mmonge.game.gacha.model.entity.ImageEntity;
 import com.mmonge.game.gacha.model.entity.ObjetCollectionEntity;
@@ -8,23 +7,22 @@ import com.mmonge.game.gacha.model.enums.RareteEnum;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(MockitoExtension.class)
 public class ObjetCollectionMapperTest {
 
-    @Spy ImageMapper imageMapper;
-    @InjectMocks ObjetCollectionMapper objetCollectionMapper;
+    @Spy
+    ImageMapper imageMapper;
+    @InjectMocks
+    ObjetCollectionMapper objetCollectionMapper;
 
     @Test
     public void test_objetCollectionEntityToDtos_ok() {
@@ -67,7 +65,7 @@ public class ObjetCollectionMapperTest {
         ImageEntity image = new ImageEntity();
         image.setId(3L);
         image.setDescription("Aladdin");
-        image.setImage("Aladdin.png".getBytes());
+        image.setImage("Aladdin.png");
         return image;
     }
 }

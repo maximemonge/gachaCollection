@@ -7,18 +7,14 @@ import ConnexionView from '../views/ConnexionView.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'connect',
-    component: ConnexionView
-  },
-  {
-    path: '/gacha',
     name: 'gacha',
     component: GachaView
   },
   {
     path: '/collection',
     name: 'collection',
-    component: CollectionView
+    component: CollectionView,
+    props: true
   },
   {
     path: '/profil',

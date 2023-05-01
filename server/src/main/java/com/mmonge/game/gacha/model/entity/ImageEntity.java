@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Setter
 public class ImageEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "img_id")
     private Long id;
 
@@ -21,7 +21,7 @@ public class ImageEntity implements Serializable {
 
     @Lob
     @Column(name = "img_image", columnDefinition = "BLOB")
-    private byte[] image;
+    private String image;
 
     @OneToOne(mappedBy = "image")
     private ObjetCollectionEntity objetCollection;

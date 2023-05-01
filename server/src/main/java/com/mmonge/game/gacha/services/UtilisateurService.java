@@ -1,6 +1,7 @@
 package com.mmonge.game.gacha.services;
 
 import com.mmonge.game.gacha.exception.DuplicationDonneeException;
+import com.mmonge.game.gacha.model.dto.UtilisateurDTO;
 
 public interface UtilisateurService {
 
@@ -9,16 +10,16 @@ public interface UtilisateurService {
      *
      * @param identifiant : identifiant de l'utilisateur
      * @param motDePasse  : mot de passe de l'utilisateur
-     * @return utilisateurId
+     * @return UtilisateurDTO
      */
-    Long login(String identifiant, String motDePasse) throws SecurityException;
+    UtilisateurDTO login(String identifiant, String motDePasse) throws SecurityException;
 
     /**
      * Crée un utilisateur
      *
      * @param identifiant : identifiant de l'utilisateur
      * @param motDePasse  : mot de passe de l'utilisateur
-     * @return utilisateurId
+     * @return UtilisateurDTO
      */
-    Long creerUtilisateur(String identifiant, String motDePasse) throws DuplicationDonneeException;
+    UtilisateurDTO creerUtilisateur(String identifiant, String motDePasse) throws DuplicationDonneeException;
 }

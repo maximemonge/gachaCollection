@@ -21,8 +21,8 @@ public class ObjetCollectionServiceImpl implements ObjetCollectionService {
     }
 
     @Override
-    public List<ObjetCollectionDTO> findAllByUtilisateurId(Long utilisateurId) {
-        return objetCollectionMapper.objetCollectionEntityToDtos(objetCollectionDaoService.findAllByUtilisateurId(utilisateurId));
+    public List<Long> findAllIdsByUtilisateurId(Long utilisateurId) {
+        return objetCollectionDaoService.findAllByUtilisateurId(utilisateurId);
     }
 
     @Autowired

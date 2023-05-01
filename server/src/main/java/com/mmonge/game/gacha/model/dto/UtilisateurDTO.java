@@ -7,8 +7,7 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public class ImageDTO implements Serializable {
+public class UtilisateurDTO implements Serializable {
     private Long id;
-    private String description;
-    private String image;
+    private String identifiant;
 }

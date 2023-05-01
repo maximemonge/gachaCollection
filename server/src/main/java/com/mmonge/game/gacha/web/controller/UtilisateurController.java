@@ -1,8 +1,10 @@
 package com.mmonge.game.gacha.web.controller;
 
 import com.mmonge.game.gacha.exception.DuplicationDonneeException;
+import com.mmonge.game.gacha.model.dto.UtilisateurDTO;
 import com.mmonge.game.gacha.model.pojo.UtilisateurPojo;
 import com.mmonge.game.gacha.services.UtilisateurService;
+import com.mmonge.game.gacha.web.controller.cors.ControllerConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,16 +13,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/user")
-@CrossOrigin(origins = "http://localhost:8080")
-public class UtilisateurController {
+public class UtilisateurController extends ControllerConfig {
     private UtilisateurService utilisateurService;
 
     @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<Long> login(@RequestBody UtilisateurPojo utilisateur) {
+    public @ResponseBody ResponseEntity<UtilisateurDTO> login(@RequestBody UtilisateurPojo utilisateurRequest) {
         try {
-            Long userId = utilisateurService.login(utilisateur.getIdentifiant(), utilisateur.getMotDePasse());
-            return ResponseEntity.ok(userId);
+            UtilisateurDTO utilisateur = utilisateurService.login(utilisateurRequest.getIdentifiant(), utilisateurRequest.getMotDePasse());
+            return ResponseEntity.ok(utilisateur);
         } catch (SecurityException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
@@ -28,10 +29,10 @@ public class UtilisateurController {
 
     @PostMapping(path = "/new", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody ResponseEntity<Long> creerUtilisateur(@RequestBody UtilisateurPojo utilisateur) {
+    public @ResponseBody ResponseEntity<UtilisateurDTO> creerUtilisateur(@RequestBody UtilisateurPojo utilisateurRequest) {
         try {
-            Long userId = utilisateurService.creerUtilisateur(utilisateur.getIdentifiant(), utilisateur.getMotDePasse());
-            return ResponseEntity.ok(userId);
+            UtilisateurDTO utilisateur = utilisateurService.creerUtilisateur(utilisateurRequest.getIdentifiant(), utilisateurRequest.getMotDePasse());
+            return ResponseEntity.ok(utilisateur);
         } catch (SecurityException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         } catch (DuplicationDonneeException e) {

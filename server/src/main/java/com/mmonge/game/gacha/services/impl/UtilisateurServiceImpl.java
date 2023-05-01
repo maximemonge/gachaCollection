@@ -1,6 +1,8 @@
 package com.mmonge.game.gacha.services.impl;
 
 import com.mmonge.game.gacha.exception.DuplicationDonneeException;
+import com.mmonge.game.gacha.mapper.UtilisateurMapper;
+import com.mmonge.game.gacha.model.dto.UtilisateurDTO;
 import com.mmonge.game.gacha.model.entity.UtilisateurEntity;
 import com.mmonge.game.gacha.services.UtilisateurService;
 import com.mmonge.game.gacha.services.impl.repository.UtilisateurRepository;
@@ -15,15 +17,16 @@ import java.util.Date;
 public class UtilisateurServiceImpl implements UtilisateurService {
 
     private UtilisateurRepository utilisateurRepository;
+    private UtilisateurMapper utilisateurMapper;
 
     private final static PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
     @Override
-    public Long login(String identifiant, String motDePasse) throws SecurityException {
+    public UtilisateurDTO login(String identifiant, String motDePasse) throws SecurityException {
         try {
             UtilisateurEntity utilisateur = utilisateurRepository.getByIdentifiant(identifiant);
             if (passwordEncoder.matches(motDePasse, utilisateur.getMotDePasse())) {
-                return utilisateur.getId();
+                return utilisateurMapper.utilisateurEntityToDto(utilisateur);
             } else {
                 throw new SecurityException();
             }
@@ -33,7 +36,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
     }
 
     @Override
-    public Long creerUtilisateur(String identifiant, String motDePasse) throws DuplicationDonneeException {
+    public UtilisateurDTO creerUtilisateur(String identifiant, String motDePasse) throws DuplicationDonneeException {
         if (utilisateurRepository.isIdentifiantUtilise(identifiant)) {
             throw new DuplicationDonneeException();
         } else {
@@ -43,12 +46,17 @@ public class UtilisateurServiceImpl implements UtilisateurService {
             utilisateur.setMotDePasse(passwordEncoder.encode(motDePasse));
             utilisateur.setDateCreation(now);
             utilisateur.setDateModification(now);
-            return utilisateurRepository.save(utilisateur).getId();
+            return utilisateurMapper.utilisateurEntityToDto(utilisateurRepository.save(utilisateur));
         }
     }
 
     @Autowired
     public void setUtilisateurRepository(UtilisateurRepository utilisateurRepository) {
         this.utilisateurRepository = utilisateurRepository;
+    }
+
+    @Autowired
+    public void setUtilisateurMapper(UtilisateurMapper utilisateurMapper) {
+        this.utilisateurMapper = utilisateurMapper;
     }
 }

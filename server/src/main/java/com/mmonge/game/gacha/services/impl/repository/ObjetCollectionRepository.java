@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface ObjetCollectionRepository extends JpaRepository<ObjetCollectionEntity, Long> {
     @Query(value =
-            "SELECT obj.* from OBJET_A_COLLECTIONNER obj, UTILISATEUR_COLLECTION usr_coll, UTILISATEUR usr " +
-            "WHERE usr.usr_id = usr_coll.uco_usr_id AND usr_coll.uco_oac_id = obj.oac_id " +
-            "AND usr.usr_id = :utilisateurId", nativeQuery = true)
-    List<ObjetCollectionEntity> findAllByUtilisateurId(@Param("utilisateurId") Long utilisateurId);
+            "SELECT obj.oac_id from OBJET_A_COLLECTIONNER obj, UTILISATEUR_COLLECTION usr_coll, UTILISATEUR usr " +
+                    "WHERE usr.usr_id = usr_coll.uco_usr_id AND usr_coll.uco_oac_id = obj.oac_id " +
+                    "AND usr.usr_id = :utilisateurId", nativeQuery = true)
+    List<Long> findAllByUtilisateurId(@Param("utilisateurId") Long utilisateurId);
 }

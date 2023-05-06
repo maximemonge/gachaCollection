@@ -31,7 +31,7 @@ public class UtilisateurService {
     public UtilisateurDTO login(String identifiant, String motDePasse) throws SecurityException {
         try {
             UtilisateurEntity utilisateur = utilisateurRepository.getByIdentifiant(identifiant);
-            if (passwordEncoder.matches(motDePasse, utilisateur.getMotDePasse())) {
+            if (utilisateur != null && passwordEncoder.matches(motDePasse, utilisateur.getMotDePasse())) {
                 return utilisateurMapper.utilisateurEntityToDto(utilisateur);
             } else {
                 throw new SecurityException();

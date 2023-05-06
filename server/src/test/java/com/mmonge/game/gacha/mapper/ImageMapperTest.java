@@ -2,9 +2,9 @@ package com.mmonge.game.gacha.mapper;
 
 import com.mmonge.game.gacha.model.dto.ImageDTO;
 import com.mmonge.game.gacha.model.entity.ImageEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,8 +12,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 public class ImageMapperTest {
 
-    @InjectMocks
-    ImageMapper imageMapper;
+    private ImageMapper imageMapper;
+
+    @BeforeEach
+    public void beforeAll() {
+        imageMapper = new ImageMapper();
+    }
 
     @Test
     public void test_imageEntityToDto_ok() {

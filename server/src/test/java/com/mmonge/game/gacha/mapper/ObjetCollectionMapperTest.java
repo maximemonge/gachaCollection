@@ -4,13 +4,13 @@ import com.mmonge.game.gacha.model.dto.ObjetCollectionDTO;
 import com.mmonge.game.gacha.model.entity.ImageEntity;
 import com.mmonge.game.gacha.model.entity.ObjetCollectionEntity;
 import com.mmonge.game.gacha.model.enums.RareteEnum;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -20,19 +20,20 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ObjetCollectionMapperTest {
 
     @Spy
-    ImageMapper imageMapper;
-    @InjectMocks
-    ObjetCollectionMapper objetCollectionMapper;
+    private ImageMapper imageMapper;
+    private ObjetCollectionMapper objetCollectionMapper;
+
+    @BeforeEach
+    public void beforeAll() {
+        objetCollectionMapper = new ObjetCollectionMapper(imageMapper);
+    }
 
     @Test
     public void test_objetCollectionEntityToDtos_ok() {
         ObjetCollectionEntity objetCollectionEntityAvecImage = creerObjetCollection(1L, "Ariel", "C", creerImage());
         ObjetCollectionEntity objetCollectionEntitySansImage = creerObjetCollection(2L, "Jafar", "R", null);
 
-        List<ObjetCollectionEntity> objetCollectionEntities = new ArrayList<>();
-        objetCollectionEntities.add(objetCollectionEntityAvecImage);
-        objetCollectionEntities.add(objetCollectionEntitySansImage);
-        objetCollectionEntities.add(null);
+        List<ObjetCollectionEntity> objetCollectionEntities = Arrays.asList(objetCollectionEntityAvecImage, objetCollectionEntitySansImage, null);
 
         List<ObjetCollectionDTO> res = objetCollectionMapper.objetCollectionEntityToDtos(objetCollectionEntities);
         res.sort(Comparator.comparing(ObjetCollectionDTO::getId));

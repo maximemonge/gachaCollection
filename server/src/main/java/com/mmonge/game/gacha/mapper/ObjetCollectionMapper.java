@@ -1,13 +1,10 @@
 package com.mmonge.game.gacha.mapper;
 
-import com.mmonge.game.gacha.model.dto.ImageDTO;
 import com.mmonge.game.gacha.model.dto.ObjetCollectionDTO;
-import com.mmonge.game.gacha.model.entity.ImageEntity;
 import com.mmonge.game.gacha.model.entity.ObjetCollectionEntity;
 import com.mmonge.game.gacha.model.enums.RareteEnum;
+import lombok.AllArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +13,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class ObjetCollectionMapper {
 
     private ImageMapper imageMapper;
@@ -38,10 +36,5 @@ public class ObjetCollectionMapper {
             dto.setCategorie(entity.getCategorie());
         }
         return dto;
-    }
-
-    @Autowired
-    public void setImageMapper(ImageMapper imageMapper) {
-        this.imageMapper = imageMapper;
     }
 }

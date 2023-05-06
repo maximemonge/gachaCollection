@@ -3,7 +3,7 @@ package com.mmonge.game.gacha.web.controller;
 import com.mmonge.game.gacha.model.dto.ObjetCollectionDTO;
 import com.mmonge.game.gacha.services.ObjetCollectionService;
 import com.mmonge.game.gacha.web.controller.cors.ControllerConfig;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/objetCollection")
+@AllArgsConstructor
 public class ObjetCollectionController extends ControllerConfig {
     private ObjetCollectionService objetCollectionService;
 
@@ -22,10 +23,5 @@ public class ObjetCollectionController extends ControllerConfig {
     @GetMapping(path = "/all/user/{utilisateurId}")
     public @ResponseBody ResponseEntity<List<Long>> getAllObjetCollectionByUtilisateurId(@PathVariable Long utilisateurId) {
         return ResponseEntity.ok(objetCollectionService.findAllIdsByUtilisateurId(utilisateurId));
-    }
-
-    @Autowired
-    public void setObjetCollectionService(ObjetCollectionService objetCollectionService) {
-        this.objetCollectionService = objetCollectionService;
     }
 }

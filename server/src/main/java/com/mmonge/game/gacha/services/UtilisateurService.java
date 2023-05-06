@@ -1,9 +1,25 @@
 package com.mmonge.game.gacha.services;
 
 import com.mmonge.game.gacha.exception.DuplicationDonneeException;
+import com.mmonge.game.gacha.mapper.UtilisateurMapper;
 import com.mmonge.game.gacha.model.dto.UtilisateurDTO;
+import com.mmonge.game.gacha.model.entity.UtilisateurEntity;
+import com.mmonge.game.gacha.services.repository.UtilisateurRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-public interface UtilisateurService {
+import java.util.Date;
+
+@Service
+@AllArgsConstructor
+public class UtilisateurService {
+
+    private final UtilisateurRepository utilisateurRepository;
+    private final UtilisateurMapper utilisateurMapper;
+
+    private final static PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
     /**
      * Connecte un utilisateur
@@ -12,7 +28,18 @@ public interface UtilisateurService {
      * @param motDePasse  : mot de passe de l'utilisateur
      * @return UtilisateurDTO
      */
-    UtilisateurDTO login(String identifiant, String motDePasse) throws SecurityException;
+    public UtilisateurDTO login(String identifiant, String motDePasse) throws SecurityException {
+        try {
+            UtilisateurEntity utilisateur = utilisateurRepository.getByIdentifiant(identifiant);
+            if (passwordEncoder.matches(motDePasse, utilisateur.getMotDePasse())) {
+                return utilisateurMapper.utilisateurEntityToDto(utilisateur);
+            } else {
+                throw new SecurityException();
+            }
+        } catch (Exception e) {
+            throw new SecurityException();
+        }
+    }
 
     /**
      * Crée un utilisateur
@@ -21,5 +48,17 @@ public interface UtilisateurService {
      * @param motDePasse  : mot de passe de l'utilisateur
      * @return UtilisateurDTO
      */
-    UtilisateurDTO creerUtilisateur(String identifiant, String motDePasse) throws DuplicationDonneeException;
+    public UtilisateurDTO creerUtilisateur(String identifiant, String motDePasse) throws DuplicationDonneeException {
+        if (utilisateurRepository.isIdentifiantUtilise(identifiant)) {
+            throw new DuplicationDonneeException();
+        } else {
+            Date now = new Date();
+            UtilisateurEntity utilisateur = new UtilisateurEntity();
+            utilisateur.setIdentifiant(identifiant);
+            utilisateur.setMotDePasse(passwordEncoder.encode(motDePasse));
+            utilisateur.setDateCreation(now);
+            utilisateur.setDateModification(now);
+            return utilisateurMapper.utilisateurEntityToDto(utilisateurRepository.save(utilisateur));
+        }
+    }
 }

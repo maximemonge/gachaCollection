@@ -5,7 +5,7 @@ import com.mmonge.game.gacha.model.dto.UtilisateurDTO;
 import com.mmonge.game.gacha.model.pojo.UtilisateurPojo;
 import com.mmonge.game.gacha.services.UtilisateurService;
 import com.mmonge.game.gacha.web.controller.cors.ControllerConfig;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/user")
+@AllArgsConstructor
 public class UtilisateurController extends ControllerConfig {
     private UtilisateurService utilisateurService;
 
@@ -38,10 +39,5 @@ public class UtilisateurController extends ControllerConfig {
         } catch (DuplicationDonneeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
-    }
-
-    @Autowired
-    public void setUtilisateurService(UtilisateurService utilisateurService) {
-        this.utilisateurService = utilisateurService;
     }
 }

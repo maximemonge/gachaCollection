@@ -1,4 +1,4 @@
-package com.mmonge.game.gacha.services.impl.repository;
+package com.mmonge.game.gacha.services.repository;
 
 import com.mmonge.game.gacha.model.entity.UtilisateurEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

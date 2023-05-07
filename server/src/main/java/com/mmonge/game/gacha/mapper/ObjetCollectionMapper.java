@@ -26,7 +26,7 @@ public class ObjetCollectionMapper {
         return dtos;
     }
 
-    private ObjetCollectionDTO objetCollectionEntityToDto(ObjetCollectionEntity entity) {
+    public ObjetCollectionDTO objetCollectionEntityToDto(ObjetCollectionEntity entity) {
         ObjetCollectionDTO dto = new ObjetCollectionDTO();
         if (entity != null) {
             dto.setId(entity.getId());

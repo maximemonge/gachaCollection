@@ -70,7 +70,9 @@ export default defineComponent({
   overflow: auto;
 
   .espace {
-    margin-bottom: 40px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 }
 </style>

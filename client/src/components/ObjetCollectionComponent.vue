@@ -18,12 +18,42 @@ export default defineComponent({
         ? this.mesObjets?.includes(this.objCollection.id)
         : false;
     },
+
+    getCouleurRarete() {
+      let couleur = "#ffffff";
+      if (this.objetDansLaCollection()) {
+        switch (this.objCollection?.rarete) {
+          case "C":
+            couleur = "#dedede";
+            break;
+          case "S":
+            couleur = "#05dd11";
+            break;
+          case "R":
+            couleur = "#00ccff";
+            break;
+          case "E":
+            couleur = "#7506b5";
+            break;
+          case "L":
+            couleur = "#ffba00";
+            break;
+          case "M":
+            couleur = "#a50808";
+            break;
+          default:
+            couleur = "#ffffff";
+            break;
+        }
+      }
+      return couleur;
+    },
   },
 });
 </script>
 
 <template>
-  <div class="objet-collection">
+  <div class="objet-collection" :style="{ borderColor: getCouleurRarete() }">
     <div class="item">
       <img
         :class="[objetDansLaCollection() ? '' : 'desactive']"
@@ -37,12 +67,15 @@ export default defineComponent({
 <style lang="less">
 .objet-collection {
   width: 130px;
-  height: 80px;
+  height: 120px;
+  border: 7px solid;
+
   .item {
     display: flex;
     flex-direction: column;
 
     img {
+      margin-top: 5px;
       margin-left: 40px;
       width: 50px;
       height: 58px;

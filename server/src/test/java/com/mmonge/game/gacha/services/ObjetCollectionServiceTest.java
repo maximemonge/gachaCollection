@@ -4,6 +4,8 @@ import com.mmonge.game.gacha.mapper.ImageMapper;
 import com.mmonge.game.gacha.mapper.ObjetCollectionMapper;
 import com.mmonge.game.gacha.model.dto.ObjetCollectionDTO;
 import com.mmonge.game.gacha.services.repository.ObjetCollectionRepository;
+import com.mmonge.game.gacha.utils.AleatoireUtils;
+import com.mmonge.game.gacha.utils.RareteUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +35,7 @@ public class ObjetCollectionServiceTest {
 
     @BeforeEach
     public void beforeAll() {
-        objetCollectionService = new ObjetCollectionService(objetCollectionRepository, new ObjetCollectionMapper(new ImageMapper()));
+        objetCollectionService = new ObjetCollectionService(objetCollectionRepository, new ObjetCollectionMapper(new ImageMapper()), new RareteUtils(new AleatoireUtils()));
     }
 
     @Test

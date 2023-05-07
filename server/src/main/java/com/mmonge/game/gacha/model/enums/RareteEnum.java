@@ -9,24 +9,22 @@ import org.slf4j.LoggerFactory;
 @AllArgsConstructor
 public enum RareteEnum {
     C("C", "Commun", 50),
-    S("S", "Peu commun", 30),
-    R("R", "Rare", 10),
-    E("E", "Épique", 6),
-    L("L", "Légendaire", 3),
-    M("M", "Mythique", 1);
+    S("S", "Peu commun", 80),
+    R("R", "Rare", 90),
+    E("E", "Épique", 96),
+    L("L", "Légendaire", 99),
+    M("M", "Mythique", 100);
 
     private final String code;
     private final String libelle;
-    private final int pourcentage;
-
+    private final int chance;
     private static final Logger LOGGER = LoggerFactory.getLogger(RareteEnum.class);
 
     public static RareteEnum get(String code) {
         RareteEnum rarete = null;
         try {
             rarete = RareteEnum.valueOf(code);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             LOGGER.warn("Impossible de convertir le code {} en RareteEnum : {}", code, e.getMessage(), e);
         }
         return rarete;

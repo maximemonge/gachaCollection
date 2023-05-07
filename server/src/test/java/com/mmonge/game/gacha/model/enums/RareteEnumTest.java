@@ -3,12 +3,8 @@ package com.mmonge.game.gacha.model.enums;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.read.ListAppender;
-import com.mmonge.game.gacha.mapper.ImageMapper;
-import com.mmonge.game.gacha.model.dto.ImageDTO;
-import com.mmonge.game.gacha.model.entity.ImageEntity;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.LoggerFactory;
 

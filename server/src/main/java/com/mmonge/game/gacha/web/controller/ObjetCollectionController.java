@@ -24,4 +24,9 @@ public class ObjetCollectionController extends ControllerConfig {
     public @ResponseBody ResponseEntity<List<Long>> getAllObjetCollectionByUtilisateurId(@PathVariable Long utilisateurId) {
         return ResponseEntity.ok(objetCollectionService.findAllIdsByUtilisateurId(utilisateurId));
     }
+
+    @GetMapping(path = "/obtenir")
+    public @ResponseBody ResponseEntity<ObjetCollectionDTO> obtenirUnObjet() {
+        return ResponseEntity.ok(objetCollectionService.obtenirUnObjet());
+    }
 }

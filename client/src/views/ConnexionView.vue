@@ -1,7 +1,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import axios from "axios";
-import { Utilisateur } from "@/model/models";
 
 export default defineComponent({
   name: "ConnexionView",

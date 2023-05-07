@@ -1,0 +1,31 @@
+package com.mmonge.game.gacha.utils;
+
+import com.mmonge.game.gacha.model.enums.RareteEnum;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@AllArgsConstructor
+public class RareteUtils {
+
+    private AleatoireUtils aleatoireUtils;
+
+    public RareteEnum getRareteAleatoire() {
+        RareteEnum rarete = null;
+        int nombreAleatoire = aleatoireUtils.genererNombreAleatoire();
+        if (nombreAleatoire <= RareteEnum.C.getChance()) {
+            rarete = RareteEnum.C;
+        } else if (nombreAleatoire <= RareteEnum.S.getChance()) {
+            rarete = RareteEnum.S;
+        } else if (nombreAleatoire <= RareteEnum.R.getChance()) {
+            rarete = RareteEnum.R;
+        } else if (nombreAleatoire <= RareteEnum.E.getChance()) {
+            rarete = RareteEnum.E;
+        } else if (nombreAleatoire <= RareteEnum.L.getChance()) {
+            rarete = RareteEnum.L;
+        } else {
+            rarete = RareteEnum.M;
+        }
+        return rarete;
+    }
+}

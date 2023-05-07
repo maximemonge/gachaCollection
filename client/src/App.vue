@@ -52,27 +52,57 @@ export default defineComponent({
 </template>
 
 <style lang="less">
-#app {
-  .menu {
-    .bandeau {
-      width: 100%;
-      .titre {
-        float: left;
-      }
-      .deconnexion {
-        float: right;
-      }
-    }
-    nav {
-      text-align: center;
-      padding: 30px;
+html {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 
-      a {
-        font-weight: bold;
-        color: #2c3e50;
+  body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
 
-        &.router-link-exact-active {
-          color: #42b983;
+    #app {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+
+      .menu {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        .bandeau {
+          flex-grow: 0;
+          width: 100%;
+          .titre {
+            float: left;
+          }
+          .deconnexion {
+            float: right;
+          }
+        }
+        nav {
+          flex-grow: 0;
+          text-align: center;
+          padding: 30px;
+
+          a {
+            font-weight: bold;
+            color: #2c3e50;
+
+            &.router-link-exact-active {
+              color: #42b983;
+            }
+          }
         }
       }
     }

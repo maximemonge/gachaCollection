@@ -51,10 +51,7 @@ export default defineComponent({
 
 <template>
   <div class="collection">
-    <div
-      v-for="objetCollection in objetCollections"
-      :key="objetCollections.length"
-    >
+    <div class="espace" v-for="objetCollection in objetCollections">
       <ObjetCollectionComponent
         :obj-collection="objetCollection"
         :mes-objets="mesObjets"
@@ -65,8 +62,15 @@ export default defineComponent({
 
 <style lang="less">
 .collection {
+  flex-grow: 1;
   text-align: center;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  overflow: auto;
+
+  .espace {
+    margin-bottom: 40px;
+  }
 }
 </style>

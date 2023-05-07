@@ -23,7 +23,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <main class="objet-collection">
+  <div class="objet-collection">
     <div class="item">
       <img
         :class="[objetDansLaCollection() ? '' : 'desactive']"
@@ -31,7 +31,7 @@ export default defineComponent({
       />
       <span>{{ objCollection?.code }}</span>
     </div>
-  </main>
+  </div>
 </template>
 
 <style lang="less">
@@ -47,6 +47,11 @@ export default defineComponent({
       width: 50px;
       height: 58px;
     }
+
+    span {
+      margin-top: 5px;
+    }
+
     .desactive {
       filter: brightness(0);
     }

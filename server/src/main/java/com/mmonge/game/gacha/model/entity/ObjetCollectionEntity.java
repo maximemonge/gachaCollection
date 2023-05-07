@@ -14,7 +14,7 @@ import java.util.Set;
 @Setter
 public class ObjetCollectionEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "oac_id")
     private Long id;
 
@@ -28,7 +28,7 @@ public class ObjetCollectionEntity implements Serializable {
     private String categorie;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name="oac_img_id", referencedColumnName = "img_id")
+    @JoinColumn(name = "oac_img_id", referencedColumnName = "img_id")
     private ImageEntity image;
 
     @ManyToMany(mappedBy = "objetsCollectionnes")

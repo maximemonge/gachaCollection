@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Setter
 public class ImageEntity implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "img_id")
     private Long id;
 

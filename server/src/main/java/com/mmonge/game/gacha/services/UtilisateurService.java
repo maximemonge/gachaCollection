@@ -29,14 +29,10 @@ public class UtilisateurService {
      * @return UtilisateurDTO
      */
     public UtilisateurDTO login(String identifiant, String motDePasse) throws SecurityException {
-        try {
-            UtilisateurEntity utilisateur = utilisateurRepository.getByIdentifiant(identifiant);
-            if (utilisateur != null && passwordEncoder.matches(motDePasse, utilisateur.getMotDePasse())) {
-                return utilisateurMapper.utilisateurEntityToDto(utilisateur);
-            } else {
-                throw new SecurityException();
-            }
-        } catch (Exception e) {
+        UtilisateurEntity utilisateur = utilisateurRepository.getByIdentifiant(identifiant);
+        if (utilisateur != null && passwordEncoder.matches(motDePasse, utilisateur.getMotDePasse())) {
+            return utilisateurMapper.utilisateurEntityToDto(utilisateur);
+        } else {
             throw new SecurityException();
         }
     }

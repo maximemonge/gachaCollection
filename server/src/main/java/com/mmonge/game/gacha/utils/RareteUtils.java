@@ -27,8 +27,10 @@ public class RareteUtils {
             rarete = RareteEnum.E;
         } else if (nombreAleatoire <= RareteEnum.L.getChance()) {
             rarete = RareteEnum.L;
-        } else {
+        } else if (nombreAleatoire <= RareteEnum.M.getChance()) {
             rarete = RareteEnum.M;
+        } else {
+            rarete = RareteEnum.F;
         }
         return rarete;
     }

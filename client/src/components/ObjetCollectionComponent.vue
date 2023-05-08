@@ -7,7 +7,7 @@ export default defineComponent({
   props: {
     objCollection: Object as PropType<ObjetCollection>,
     mesObjets: Object as PropType<UtilisateurCollection[]>,
-    afficherQuantite: Object as PropType<boolean>,
+    afficherQuantite: Boolean as PropType<boolean>,
   },
   data() {
     const quantite: number = this.getQuantite();

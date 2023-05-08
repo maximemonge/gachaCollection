@@ -24,7 +24,7 @@ public class RareteUtilsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {Integer.MIN_VALUE, 0, 500})
+    @ValueSource(ints = {Integer.MIN_VALUE, 0, 50000})
     public void test_getRareteAleatoire_commun_min(int nombreAleatoire) {
         Mockito.when(aleatoireUtils.genererNombreAleatoire()).thenReturn(nombreAleatoire);
 
@@ -32,7 +32,7 @@ public class RareteUtilsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {501, 800})
+    @ValueSource(ints = {50001, 80000})
     public void test_getRareteAleatoire_peuCommun(int nombreAleatoire) {
         Mockito.when(aleatoireUtils.genererNombreAleatoire()).thenReturn(nombreAleatoire);
 
@@ -40,7 +40,7 @@ public class RareteUtilsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {801, 900})
+    @ValueSource(ints = {80001, 90000})
     public void test_getRareteAleatoire_rare(int nombreAleatoire) {
         Mockito.when(aleatoireUtils.genererNombreAleatoire()).thenReturn(nombreAleatoire);
 
@@ -48,7 +48,7 @@ public class RareteUtilsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {901, 960})
+    @ValueSource(ints = {90001, 96000})
     public void test_getRareteAleatoire_epique(int nombreAleatoire) {
         Mockito.when(aleatoireUtils.genererNombreAleatoire()).thenReturn(nombreAleatoire);
 
@@ -56,7 +56,7 @@ public class RareteUtilsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {961, 990})
+    @ValueSource(ints = {96001, 99000})
     public void test_getRareteAleatoire_legendaire(int nombreAleatoire) {
         Mockito.when(aleatoireUtils.genererNombreAleatoire()).thenReturn(nombreAleatoire);
 
@@ -64,10 +64,18 @@ public class RareteUtilsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {991, 1000, Integer.MAX_VALUE})
+    @ValueSource(ints = {99001, 99999})
     public void test_getRareteAleatoire_mythique(int nombreAleatoire) {
         Mockito.when(aleatoireUtils.genererNombreAleatoire()).thenReturn(nombreAleatoire);
 
         assertEquals(RareteEnum.M, rareteUtils.getRareteAleatoire());
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {100000, Integer.MAX_VALUE})
+    public void test_getRareteAleatoire_fantome(int nombreAleatoire) {
+        Mockito.when(aleatoireUtils.genererNombreAleatoire()).thenReturn(nombreAleatoire);
+
+        assertEquals(RareteEnum.F, rareteUtils.getRareteAleatoire());
     }
 }

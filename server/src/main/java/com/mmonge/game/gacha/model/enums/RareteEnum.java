@@ -5,16 +5,21 @@ import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Comparator;
+
 @Getter
 @AllArgsConstructor
-public enum RareteEnum {
-    C("C", "Commun", 500),
-    S("S", "Peu commun", 800),
-    R("R", "Rare", 900),
-    E("E", "Épique", 960),
-    L("L", "Légendaire", 990),
-    M("M", "Mythique", 1000);
+public enum RareteEnum implements Comparator<RareteEnum> {
+    C(1, "C", "Commun", 50000),
+    S(2, "S", "Peu commun", 80000),
+    R(3, "R", "Rare", 90000),
+    E(4, "E", "Épique", 96000),
+    L(5, "L", "Légendaire", 99000),
+    M(6, "M", "Mythique", 99999),
+    F(7, "F", "Fantôme", 100000);
 
+
+    private final int ordre;
     private final String code;
     private final String libelle;
     private final int chance;
@@ -28,5 +33,10 @@ public enum RareteEnum {
             LOGGER.warn("Impossible de convertir le code {} en RareteEnum : {}", code, e.getMessage(), e);
         }
         return rarete;
+    }
+
+    @Override
+    public int compare(RareteEnum o1, RareteEnum o2) {
+        return Integer.compare(o1.ordre, o2.ordre);
     }
 }

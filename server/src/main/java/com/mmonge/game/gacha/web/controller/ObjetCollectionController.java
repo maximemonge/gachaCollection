@@ -9,7 +9,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/objetCollection")
@@ -19,8 +23,10 @@ public class ObjetCollectionController extends ControllerConfig {
     private UtilisateurCollectionService utilisateurCollectionService;
 
     @GetMapping(path = "/all")
-    public @ResponseBody ResponseEntity<List<ObjetCollectionDTO>> getAllObjetCollection() {
-        return ResponseEntity.ok(objetCollectionService.findAll());
+    public @ResponseBody ResponseEntity<Map<String, List<ObjetCollectionDTO>>> getAllObjetCollection() {
+        TreeMap<String, List<ObjetCollectionDTO>> objetsParCategorie = new TreeMap<>(objetCollectionService.findAll().stream().collect(Collectors.groupingBy(ObjetCollectionDTO::getCategorie)));
+        objetsParCategorie.values().forEach(l -> l.sort(Comparator.comparing(ObjetCollectionDTO::getRarete)));
+        return ResponseEntity.ok(objetsParCategorie);
     }
 
     @GetMapping(path = "/all/user/{utilisateurId}")

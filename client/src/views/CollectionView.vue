@@ -11,11 +11,12 @@ export default defineComponent({
     ObjetCollectionComponent,
   },
   data() {
-    let objetCollections: ObjetCollection[] = [];
+    let objetCollectionParCategories: Map<string, ObjetCollection[]> =
+      new Map();
     let mesObjets: UtilisateurCollection[] = [];
     const route = useRoute();
     const utilisateurId = route.query.utilisateurId;
-    return { objetCollections, mesObjets, utilisateurId };
+    return { objetCollectionParCategories, mesObjets, utilisateurId };
   },
   mounted() {
     this.getAllObjetCollection();
@@ -26,7 +27,7 @@ export default defineComponent({
       await axios
         .get("http://localhost:3000/objetCollection/all")
         .then((reponse) => {
-          this.objetCollections = reponse.data;
+          this.objetCollectionParCategories = reponse.data;
         })
         .catch(() => {
           console.log("Échec lors de la récupération des objets de collection");
@@ -45,18 +46,31 @@ export default defineComponent({
           console.log("Échec lors de la récupération des objets de collection");
         });
     },
+
+    castObjet(objet: any) {
+      const objetCast: ObjetCollection = objet;
+      return objetCast;
+    },
   },
 });
 </script>
 
 <template>
   <div class="collection">
-    <div class="espace" v-for="objetCollection in objetCollections">
-      <ObjetCollectionComponent
-        :obj-collection="objetCollection"
-        :mes-objets="mesObjets"
-        :afficherQuantite="true"
-      ></ObjetCollectionComponent>
+    <div class="espace">
+      <template v-for="(value, key) in objetCollectionParCategories">
+        <div class="objetsParCategorie espace">
+          <span class="categorie">{{ key }}</span>
+          <div class="objets">
+            <ObjetCollectionComponent
+              class="marge"
+              v-for="objet in value"
+              :obj-collection="castObjet(objet)"
+              :mes-objets="mesObjets"
+              :afficherQuantite="true"
+            ></ObjetCollectionComponent>
+          </div></div
+      ></template>
     </div>
   </div>
 </template>
@@ -74,6 +88,29 @@ export default defineComponent({
     margin-bottom: 10px;
     margin-left: 10px;
     margin-right: 10px;
+
+    .objetsParCategorie {
+      display: flex;
+      flex-direction: column;
+
+      .categorie {
+        font-size: 30px;
+        margin-bottom: 30px;
+        margin-top: 30px;
+        text-align: left;
+      }
+
+      .objets {
+        display: inline-flex;
+        flex-flow: wrap;
+
+        .marge {
+          margin-bottom: 10px;
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+      }
+    }
   }
 }
 </style>

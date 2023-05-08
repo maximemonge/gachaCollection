@@ -12,6 +12,6 @@ public class AleatoireUtils {
     public int genererNombreAleatoire() {
         Random random = new Random();
         random.setSeed(new Date().getTime());
-        return random.nextInt(RareteEnum.M.getChance()) + 1;
+        return random.nextInt(RareteEnum.F.getChance()) + 1;
     }
 }

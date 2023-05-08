@@ -50,6 +50,9 @@ export default defineComponent({
           case "M":
             couleur = "#a50808";
             break;
+          case "F":
+            couleur = "#000000";
+            break;
           default:
             couleur = "#ffffff";
             break;
@@ -86,8 +89,8 @@ export default defineComponent({
 
 <style lang="less">
 .objet-collection {
-  width: 130px;
-  height: 130px;
+  width: 200px;
+  height: 200px;
   border: 7px solid;
 
   .item {
@@ -107,8 +110,8 @@ export default defineComponent({
     img {
       margin-top: 5px;
       margin-left: 40px;
-      width: 50px;
-      height: 58px;
+      width: 121px;
+      height: 134px;
     }
 
     span {

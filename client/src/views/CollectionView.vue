@@ -47,7 +47,7 @@ export default defineComponent({
         });
     },
 
-    castObjet(objet: any) {
+    castObjetEnObjetCollection(objet: any) {
       const objetCast: ObjetCollection = objet;
       return objetCast;
     },
@@ -65,7 +65,7 @@ export default defineComponent({
             <ObjetCollectionComponent
               class="marge"
               v-for="objet in value"
-              :obj-collection="castObjet(objet)"
+              :obj-collection="castObjetEnObjetCollection(objet)"
               :mes-objets="mesObjets"
               :afficherQuantite="true"
             ></ObjetCollectionComponent>

@@ -35,7 +35,16 @@ export default defineComponent({
       </button>
     </div>
     <nav>
-      <router-link to="/">Gacha</router-link> |
+      <router-link to="/">Accueil</router-link>
+      |
+      <router-link
+        :to="{
+          path: '/gacha',
+          query: { utilisateurId: utilisateur.id },
+        }"
+        >Gacha</router-link
+      >
+      |
       <router-link
         :to="{
           path: '/collection',

@@ -33,7 +33,6 @@ public class UtilisateurEntity implements Serializable {
     @Column(name = "usr_date_suppression")
     private Date dateSuppression;
 
-    @ManyToMany
-    @JoinTable(name = "utilisateur_collection", joinColumns = @JoinColumn(name = "uco_usr_id"), inverseJoinColumns = @JoinColumn(name = "uco_oac_id"))
-    private Set<ObjetCollectionEntity> objetsCollectionnes;
+    @OneToMany(mappedBy = "utilisateur")
+    private Set<UtilisateurCollectionEntity> ucoUsrUtilisateurCollections;
 }

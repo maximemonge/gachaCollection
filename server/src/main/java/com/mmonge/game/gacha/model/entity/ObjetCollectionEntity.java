@@ -31,6 +31,6 @@ public class ObjetCollectionEntity implements Serializable {
     @JoinColumn(name = "oac_img_id", referencedColumnName = "img_id")
     private ImageEntity image;
 
-    @ManyToMany(mappedBy = "objetsCollectionnes")
-    private Set<UtilisateurEntity> possesseurs;
+    @OneToMany(mappedBy = "objetCollection")
+    private Set<UtilisateurCollectionEntity> possesseurs;
 }

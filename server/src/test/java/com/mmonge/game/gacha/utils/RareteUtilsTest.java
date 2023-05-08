@@ -24,7 +24,7 @@ public class RareteUtilsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {Integer.MIN_VALUE, 0, 50})
+    @ValueSource(ints = {Integer.MIN_VALUE, 0, 500})
     public void test_getRareteAleatoire_commun_min(int nombreAleatoire) {
         Mockito.when(aleatoireUtils.genererNombreAleatoire()).thenReturn(nombreAleatoire);
 
@@ -32,7 +32,7 @@ public class RareteUtilsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {51, 80})
+    @ValueSource(ints = {501, 800})
     public void test_getRareteAleatoire_peuCommun(int nombreAleatoire) {
         Mockito.when(aleatoireUtils.genererNombreAleatoire()).thenReturn(nombreAleatoire);
 
@@ -40,7 +40,7 @@ public class RareteUtilsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {81, 90})
+    @ValueSource(ints = {801, 900})
     public void test_getRareteAleatoire_rare(int nombreAleatoire) {
         Mockito.when(aleatoireUtils.genererNombreAleatoire()).thenReturn(nombreAleatoire);
 
@@ -48,7 +48,7 @@ public class RareteUtilsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {91, 96})
+    @ValueSource(ints = {901, 960})
     public void test_getRareteAleatoire_epique(int nombreAleatoire) {
         Mockito.when(aleatoireUtils.genererNombreAleatoire()).thenReturn(nombreAleatoire);
 
@@ -56,7 +56,7 @@ public class RareteUtilsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {97, 99})
+    @ValueSource(ints = {961, 990})
     public void test_getRareteAleatoire_legendaire(int nombreAleatoire) {
         Mockito.when(aleatoireUtils.genererNombreAleatoire()).thenReturn(nombreAleatoire);
 
@@ -64,7 +64,7 @@ public class RareteUtilsTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {100, Integer.MAX_VALUE})
+    @ValueSource(ints = {991, 1000, Integer.MAX_VALUE})
     public void test_getRareteAleatoire_mythique(int nombreAleatoire) {
         Mockito.when(aleatoireUtils.genererNombreAleatoire()).thenReturn(nombreAleatoire);
 

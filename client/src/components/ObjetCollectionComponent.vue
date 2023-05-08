@@ -1,12 +1,17 @@
 <script lang="ts">
-import { ObjetCollection } from "@/model/models";
+import { ObjetCollection, UtilisateurCollection } from "@/model/models";
 import { PropType, defineComponent } from "vue";
 
 export default defineComponent({
   name: "ObjetCollectionComponent",
   props: {
     objCollection: Object as PropType<ObjetCollection>,
-    mesObjets: Object as PropType<number[]>,
+    mesObjets: Object as PropType<UtilisateurCollection[]>,
+    afficherQuantite: Object as PropType<boolean>,
+  },
+  data() {
+    const quantite: number = this.getQuantite();
+    return { quantite };
   },
   methods: {
     getImageSrc() {
@@ -15,7 +20,11 @@ export default defineComponent({
 
     objetDansLaCollection() {
       return this.objCollection
-        ? this.mesObjets?.includes(this.objCollection.id)
+        ? this.mesObjets
+            ?.map((obj) => {
+              return obj.objetCollectionId;
+            })
+            .includes(this.objCollection.id)
         : false;
     },
 
@@ -48,6 +57,12 @@ export default defineComponent({
       }
       return couleur;
     },
+
+    getQuantite() {
+      return this.mesObjets?.filter(
+        (obj) => this.objCollection?.id === obj.objetCollectionId
+      )[0]?.quantite;
+    },
   },
 });
 </script>
@@ -55,6 +70,11 @@ export default defineComponent({
 <template>
   <div class="objet-collection" :style="{ borderColor: getCouleurRarete() }">
     <div class="item">
+      <span
+        :class="[quantite && afficherQuantite ? '' : 'cache']"
+        class="quantite"
+        >x{{ quantite }}</span
+      >
       <img
         :class="[objetDansLaCollection() ? '' : 'desactive']"
         :src="getImageSrc()"
@@ -67,12 +87,22 @@ export default defineComponent({
 <style lang="less">
 .objet-collection {
   width: 130px;
-  height: 120px;
+  height: 130px;
   border: 7px solid;
 
   .item {
     display: flex;
     flex-direction: column;
+
+    .cache {
+      visibility: hidden;
+    }
+
+    .quantite {
+      margin-left: 10px;
+      text-align: initial;
+      float: left;
+    }
 
     img {
       margin-top: 5px;

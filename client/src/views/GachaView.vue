@@ -40,9 +40,11 @@ export default defineComponent({
       Obtenir un objet
     </button>
     <div v-if="objetCollection" class="obtention">
+      <span>Tu as obtenu</span>
       <ObjetCollectionComponent
         :obj-collection="objetCollection"
-        :mes-objets="[objetCollection.id]"
+        :mes-objets="[{ objetCollectionId: objetCollection.id, quantite: 1 }]"
+        :afficherQuantite="false"
       ></ObjetCollectionComponent>
     </div>
   </div>
@@ -64,9 +66,10 @@ export default defineComponent({
   .obtention {
     width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 15px;
+    margin-top: 35px;
   }
 }
 </style>

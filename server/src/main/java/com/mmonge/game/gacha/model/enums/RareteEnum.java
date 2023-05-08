@@ -8,12 +8,12 @@ import org.slf4j.LoggerFactory;
 @Getter
 @AllArgsConstructor
 public enum RareteEnum {
-    C("C", "Commun", 50),
-    S("S", "Peu commun", 80),
-    R("R", "Rare", 90),
-    E("E", "Épique", 96),
-    L("L", "Légendaire", 99),
-    M("M", "Mythique", 100);
+    C("C", "Commun", 500),
+    S("S", "Peu commun", 800),
+    R("R", "Rare", 900),
+    E("E", "Épique", 960),
+    L("L", "Légendaire", 990),
+    M("M", "Mythique", 1000);
 
     private final String code;
     private final String libelle;

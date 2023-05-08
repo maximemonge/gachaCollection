@@ -17,7 +17,6 @@ public class RareteUtils {
     public RareteEnum getRareteAleatoire() {
         RareteEnum rarete = null;
         int nombreAleatoire = aleatoireUtils.genererNombreAleatoire();
-        LOGGER.info("nb aléatoire généré : {}", nombreAleatoire);
         if (nombreAleatoire <= RareteEnum.C.getChance()) {
             rarete = RareteEnum.C;
         } else if (nombreAleatoire <= RareteEnum.S.getChance()) {

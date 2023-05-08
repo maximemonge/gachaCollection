@@ -24,5 +24,5 @@ public class UtilisateurCollectionEntity implements Serializable {
     private ObjetCollectionEntity objetCollection;
 
     @Column(name = "uco_quantite")
-    private String quantite;
+    private Long quantite;
 }

@@ -1,5 +1,6 @@
 package com.mmonge.game.gacha.utils;
 
+import com.mmonge.game.gacha.model.enums.RareteEnum;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -11,6 +12,6 @@ public class AleatoireUtils {
     public int genererNombreAleatoire() {
         Random random = new Random();
         random.setSeed(new Date().getTime());
-        return random.nextInt(100) + 1;
+        return random.nextInt(RareteEnum.M.getChance()) + 1;
     }
 }

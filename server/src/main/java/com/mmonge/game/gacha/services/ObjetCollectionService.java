@@ -30,16 +30,6 @@ public class ObjetCollectionService {
     }
 
     /**
-     * Récupère tous les ids des objets de collection d'un utilisateur
-     *
-     * @param utilisateurId : id de l'utilisateur
-     * @return une liste d'objets de collection d'un utilisateur
-     */
-    public List<Long> findAllIdsByUtilisateurId(Long utilisateurId) {
-        return objetCollectionRepository.findAllByUtilisateurId(utilisateurId);
-    }
-
-    /**
      * Récupère un objet aléatoire pour l'utilisateur passé en paramètre
      *
      * @return objet de collection aléatoire

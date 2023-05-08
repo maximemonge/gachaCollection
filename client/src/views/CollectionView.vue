@@ -2,7 +2,7 @@
 import { PropType, defineComponent } from "vue";
 import axios from "axios";
 import ObjetCollectionComponent from "../components/ObjetCollectionComponent.vue";
-import { ObjetCollection, Utilisateur } from "@/model/models";
+import { ObjetCollection, UtilisateurCollection } from "@/model/models";
 import { useRoute } from "vue-router";
 
 export default defineComponent({
@@ -12,7 +12,7 @@ export default defineComponent({
   },
   data() {
     let objetCollections: ObjetCollection[] = [];
-    let mesObjets: number[] = [];
+    let mesObjets: UtilisateurCollection[] = [];
     const route = useRoute();
     const utilisateurId = route.query.utilisateurId;
     return { objetCollections, mesObjets, utilisateurId };
@@ -55,6 +55,7 @@ export default defineComponent({
       <ObjetCollectionComponent
         :obj-collection="objetCollection"
         :mes-objets="mesObjets"
+        :afficherQuantite="true"
       ></ObjetCollectionComponent>
     </div>
   </div>

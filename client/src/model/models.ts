@@ -10,3 +10,8 @@ export interface Utilisateur {
     id: number,
     identifiant: string,
 }
+
+export interface UtilisateurCollection {
+    objetCollectionId: number,
+    quantite: number,
+}

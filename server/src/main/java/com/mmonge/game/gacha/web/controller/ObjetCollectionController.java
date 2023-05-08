@@ -1,7 +1,9 @@
 package com.mmonge.game.gacha.web.controller;
 
 import com.mmonge.game.gacha.model.dto.ObjetCollectionDTO;
+import com.mmonge.game.gacha.model.dto.UtilisateurCollectionDTO;
 import com.mmonge.game.gacha.services.ObjetCollectionService;
+import com.mmonge.game.gacha.services.UtilisateurCollectionService;
 import com.mmonge.game.gacha.web.controller.cors.ControllerConfig;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ObjetCollectionController extends ControllerConfig {
     private ObjetCollectionService objetCollectionService;
+    private UtilisateurCollectionService utilisateurCollectionService;
 
     @GetMapping(path = "/all")
     public @ResponseBody ResponseEntity<List<ObjetCollectionDTO>> getAllObjetCollection() {
@@ -21,8 +24,8 @@ public class ObjetCollectionController extends ControllerConfig {
     }
 
     @GetMapping(path = "/all/user/{utilisateurId}")
-    public @ResponseBody ResponseEntity<List<Long>> getAllObjetCollectionByUtilisateurId(@PathVariable Long utilisateurId) {
-        return ResponseEntity.ok(objetCollectionService.findAllIdsByUtilisateurId(utilisateurId));
+    public @ResponseBody ResponseEntity<List<UtilisateurCollectionDTO>> getAllObjetCollectionByUtilisateurId(@PathVariable Long utilisateurId) {
+        return ResponseEntity.ok(utilisateurCollectionService.findAllIdsByUtilisateurId(utilisateurId));
     }
 
     @GetMapping(path = "/obtenir/user/{utilisateurId}")

@@ -8,8 +8,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface UtilisateurCollectionRepository extends JpaRepository<UtilisateurCollectionEntity, Long> {
+
+    @Query("SELECT coll from ObjetCollectionEntity obj, UtilisateurCollectionEntity coll, UtilisateurEntity usr " +
+            "WHERE usr.id = coll.utilisateur.id AND coll.objetCollection.id = obj.id " +
+            "AND usr.id = :utilisateurId")
+    List<UtilisateurCollectionEntity> findAllByUtilisateurId(@Param("utilisateurId") Long utilisateurId);
 
     @Modifying
     @Transactional

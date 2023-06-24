@@ -34,8 +34,6 @@ public class UtilisateurController extends ControllerConfig {
         try {
             UtilisateurDTO utilisateur = utilisateurService.creerUtilisateur(utilisateurRequest.getIdentifiant(), utilisateurRequest.getMotDePasse());
             return ResponseEntity.ok(utilisateur);
-        } catch (SecurityException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         } catch (DuplicationDonneeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }

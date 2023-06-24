@@ -2,6 +2,8 @@
 import { defineComponent } from "vue";
 import ConnexionView from "./views/ConnexionView.vue";
 import { Utilisateur } from "./model/models";
+import { useI18n } from "vue-i18n";
+import { getLangues } from "./traductions/langues";
 
 export default defineComponent({
   name: "MainView",
@@ -9,8 +11,11 @@ export default defineComponent({
     ConnexionView,
   },
   data() {
+    const i18n = useI18n();
+    const trad = i18n.t;
     let utilisateur: Utilisateur = undefined!;
-    return { utilisateur };
+    const langues = getLangues();
+    return { utilisateur, langues, i18n, trad };
   },
 
   methods: {
@@ -35,9 +40,13 @@ export default defineComponent({
   <div class="menu" v-if="utilisateur">
     <div class="bandeau">
       <div class="titre">
-        <span class="bienvenue">Bienvenue {{ utilisateur.identifiant }} !</span>
+        <span class="bienvenue">{{
+          trad("header.bienvenue.user", {
+            identifiant: utilisateur.identifiant,
+          })
+        }}</span>
         <nav>
-          <router-link to="/">Accueil</router-link>
+          <router-link to="/">{{ trad("header.menu.accueil") }}</router-link>
           |
           <router-link
             :to="{
@@ -47,7 +56,7 @@ export default defineComponent({
                 utilisateurMonnaie: utilisateur.monnaie,
               },
             }"
-            >Gacha</router-link
+            >{{ trad("header.menu.gacha") }}</router-link
           >
           |
           <router-link
@@ -55,22 +64,31 @@ export default defineComponent({
               path: '/collection',
               query: { utilisateurId: utilisateur.id },
             }"
-            >Ma collection</router-link
+            >{{ trad("header.menu.macollection") }}</router-link
           >
           |
-          <router-link to="/profil">Profil</router-link>
+          <router-link to="/profil">{{
+            trad("header.menu.profil")
+          }}</router-link>
         </nav>
+        <select class="langues" v-model="i18n.locale">
+          <option v-for="langue in langues" :value="langue.id">
+            {{ langue.libelle }}
+          </option>
+        </select>
         <button
           class="deconnexion"
           type="button"
           @click="deconnecterUtilisateur"
         >
-          Déconnexion
+          {{ trad("header.deconnexion") }}
         </button>
       </div>
       <div class="monnaie" :key="utilisateur.monnaie">
-        <span>Monnaie : {{ utilisateur.monnaie }}</span
-        ><img src="./assets/argent.png" />
+        <span
+          >{{ trad("header.argent") }} : {{ utilisateur.monnaie
+          }}<img src="./assets/argent.png"
+        /></span>
       </div>
     </div>
     <div class="corps">
@@ -119,6 +137,10 @@ html {
             flex-direction: row;
             width: 100%;
 
+            .langues {
+              margin-right: 5px;
+            }
+
             .bienvenue {
               flex-grow: 1;
             }
@@ -141,7 +163,6 @@ html {
             img {
               width: 12px;
               height: 12px;
-              position: absolute;
               margin-top: 3px;
               margin-left: 3px;
             }

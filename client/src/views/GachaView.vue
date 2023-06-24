@@ -4,15 +4,17 @@ import axios from "axios";
 import { ObjetCollection, Utilisateur } from "@/model/models";
 import ObjetCollectionComponent from "@/components/ObjetCollectionComponent.vue";
 import { getUtilisateurFromRoute } from "@/utils/utilisateurUtils";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "GachaView",
   emits: ["perteMonnaie"],
   data() {
+    const trad = useI18n().t;
     let objetCollection: ObjetCollection = undefined!;
     const utilisateur: Utilisateur = getUtilisateurFromRoute();
     const coutGacha: number = 1;
-    return { objetCollection, utilisateur, coutGacha };
+    return { objetCollection, utilisateur, coutGacha, trad };
   },
 
   methods: {
@@ -50,7 +52,7 @@ export default defineComponent({
 
 <template>
   <div class="gacha">
-    <span>Obtenir un objet</span>
+    <span>{{ trad("gacha.obtenirobjet") }}</span>
     <button
       :key="'obtentionObjet' + coutGacha"
       :disabled="!isMonnaieSuffisante"
@@ -61,7 +63,7 @@ export default defineComponent({
       -{{ coutGacha }} <img src="../assets/argent.png" />
     </button>
     <div v-if="objetCollection" class="obtention">
-      <span>Tu as obtenu</span>
+      <span>{{ trad("gacha.objetobtenu") }}</span>
       <ObjetCollectionComponent
         :obj-collection="objetCollection"
         :mes-objets="[{ objetCollectionId: objetCollection.id, quantite: 1 }]"

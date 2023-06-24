@@ -10,4 +10,5 @@ import java.io.Serializable;
 public class UtilisateurDTO implements Serializable {
     private Long id;
     private String identifiant;
+    private Long monnaie;
 }

@@ -33,6 +33,9 @@ public class UtilisateurEntity implements Serializable {
     @Column(name = "usr_date_suppression")
     private Date dateSuppression;
 
+    @Column(name = "usr_monnaie")
+    private Long monnaie;
+
     @OneToMany(mappedBy = "utilisateur")
     private Set<UtilisateurCollectionEntity> ucoUsrUtilisateurCollections;
 }

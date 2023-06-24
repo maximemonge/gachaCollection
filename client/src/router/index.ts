@@ -3,6 +3,7 @@ import GachaView from '../views/GachaView.vue'
 import CollectionView from '../views/CollectionView.vue'
 import ProfilView from '../views/ProfilView.vue'
 import AccueilView from '../views/AccueilView.vue'
+import Erreur404 from '../views/Erreur404.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -25,7 +26,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/profil',
     name: 'profil',
     component: ProfilView
-  }
+  },
+  {
+    path: "/:catchAll(.*)",
+    component: Erreur404,
+  },
 ]
 
 const router = createRouter({

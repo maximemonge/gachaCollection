@@ -34,8 +34,8 @@ public class ObjetCollectionController extends ControllerConfig {
         return ResponseEntity.ok(utilisateurCollectionService.findAllIdsByUtilisateurId(utilisateurId));
     }
 
-    @GetMapping(path = "/obtenir/user/{utilisateurId}")
-    public @ResponseBody ResponseEntity<ObjetCollectionDTO> obtenirUnObjet(@PathVariable Long utilisateurId) {
-        return ResponseEntity.ok(objetCollectionService.obtenirUnObjet(utilisateurId));
+    @GetMapping(path = "/obtenir/user/{utilisateurId}/{cout}")
+    public @ResponseBody ResponseEntity<ObjetCollectionDTO> obtenirUnObjet(@PathVariable Long utilisateurId, @PathVariable Long cout) {
+        return ResponseEntity.ok(objetCollectionService.obtenirUnObjet(utilisateurId, cout));
     }
 }

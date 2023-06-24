@@ -1,27 +1,32 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import axios from "axios";
-import { useRoute } from "vue-router";
-import { ObjetCollection } from "@/model/models";
+import { ObjetCollection, Utilisateur } from "@/model/models";
 import ObjetCollectionComponent from "@/components/ObjetCollectionComponent.vue";
+import { getUtilisateurFromRoute } from "@/utils/utilisateurUtils";
 
 export default defineComponent({
   name: "GachaView",
   data() {
     let objetCollection: ObjetCollection = undefined!;
-    const route = useRoute();
-    const utilisateurId = route.query.utilisateurId;
-    return { objetCollection, utilisateurId };
+    const utilisateur: Utilisateur = getUtilisateurFromRoute();
+    const coutGacha: number = 1;
+    return { objetCollection, utilisateur, coutGacha };
   },
+
   methods: {
     async obtenirUnObjet() {
       await axios
         .get(
           "http://localhost:3000/objetCollection/obtenir/user/" +
-            this.utilisateurId
+            this.utilisateur.id +
+            "/" +
+            this.coutGacha
         )
         .then((reponse) => {
           this.objetCollection = reponse.data;
+          this.utilisateur.monnaie -= this.coutGacha;
+          this.$emit("perteMonnaie", this.coutGacha);
         })
         .catch(() => {
           console.log(
@@ -30,14 +35,29 @@ export default defineComponent({
         });
     },
   },
+  computed: {
+    isMonnaieSuffisante(): boolean {
+      return (
+        this.utilisateur.monnaie > 0 &&
+        this.utilisateur.monnaie - this.coutGacha >= 0
+      );
+    },
+  },
   components: { ObjetCollectionComponent },
 });
 </script>
 
 <template>
   <div class="gacha">
-    <button class="boutonObtention" type="button" @click="obtenirUnObjet">
-      Obtenir un objet
+    <span>Obtenir un objet</span>
+    <button
+      :key="'obtentionObjet' + coutGacha"
+      :disabled="!isMonnaieSuffisante"
+      class="boutonObtention monnaie"
+      type="button"
+      @click="obtenirUnObjet"
+    >
+      -{{ coutGacha }} <img src="../assets/argent.png" />
     </button>
     <div v-if="objetCollection" class="obtention">
       <span>Tu as obtenu</span>
@@ -59,8 +79,19 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
 
+  .monnaie {
+    img {
+      width: 12px;
+      height: 12px;
+      margin-top: 3px;
+    }
+  }
+
   .boutonObtention {
-    width: 150px;
+    margin-top: 5px;
+    height: 25px;
+    width: 50px;
+    font-size: 16px;
   }
 
   .obtention {

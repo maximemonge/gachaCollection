@@ -16,11 +16,16 @@ export default defineComponent({
   methods: {
     connecterUtilisateur(utilisateur: Utilisateur) {
       this.utilisateur = utilisateur;
+      this.$router.push("/");
     },
 
     deconnecterUtilisateur() {
       this.utilisateur = undefined!;
       this.$router.push("/");
+    },
+
+    perteMonnaie(cout: number) {
+      this.utilisateur.monnaie -= cout;
     },
   },
 });
@@ -29,33 +34,48 @@ export default defineComponent({
 <template>
   <div class="menu" v-if="utilisateur">
     <div class="bandeau">
-      <span class="titre">Bienvenue {{ utilisateur.identifiant }} !</span>
-      <button class="deconnexion" type="button" @click="deconnecterUtilisateur">
-        Déconnexion
-      </button>
+      <div class="titre">
+        <span class="bienvenue">Bienvenue {{ utilisateur.identifiant }} !</span>
+        <nav>
+          <router-link to="/">Accueil</router-link>
+          |
+          <router-link
+            :to="{
+              path: '/gacha',
+              query: {
+                utilisateurId: utilisateur.id,
+                utilisateurMonnaie: utilisateur.monnaie,
+              },
+            }"
+            >Gacha</router-link
+          >
+          |
+          <router-link
+            :to="{
+              path: '/collection',
+              query: { utilisateurId: utilisateur.id },
+            }"
+            >Ma collection</router-link
+          >
+          |
+          <router-link to="/profil">Profil</router-link>
+        </nav>
+        <button
+          class="deconnexion"
+          type="button"
+          @click="deconnecterUtilisateur"
+        >
+          Déconnexion
+        </button>
+      </div>
+      <div class="monnaie" :key="utilisateur.monnaie">
+        <span>Monnaie : {{ utilisateur.monnaie }}</span
+        ><img src="./assets/argent.png" />
+      </div>
     </div>
-    <nav>
-      <router-link to="/">Accueil</router-link>
-      |
-      <router-link
-        :to="{
-          path: '/gacha',
-          query: { utilisateurId: utilisateur.id },
-        }"
-        >Gacha</router-link
-      >
-      |
-      <router-link
-        :to="{
-          path: '/collection',
-          query: { utilisateurId: utilisateur.id },
-        }"
-        >Ma collection</router-link
-      >
-      |
-      <router-link to="/profil">Profil</router-link>
-    </nav>
-    <router-view :key="$route.path" />
+    <div class="corps">
+      <router-view :key="$route.path" @perte-monnaie="perteMonnaie" />
+    </div>
   </div>
   <ConnexionView v-else @utilisateur-connecte="connecterUtilisateur" />
 </template>
@@ -83,6 +103,7 @@ html {
       left: 0;
       bottom: 0;
       right: 0;
+      margin: 5px;
 
       .menu {
         height: 100%;
@@ -92,26 +113,43 @@ html {
         .bandeau {
           flex-grow: 0;
           width: 100%;
+
           .titre {
-            float: left;
-          }
-          .deconnexion {
-            float: right;
-          }
-        }
-        nav {
-          flex-grow: 0;
-          text-align: center;
-          padding: 30px;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
 
-          a {
-            font-weight: bold;
-            color: #2c3e50;
+            .bienvenue {
+              flex-grow: 1;
+            }
 
-            &.router-link-exact-active {
-              color: #42b983;
+            nav {
+              flex-grow: 1;
+
+              a {
+                font-weight: bold;
+                color: #2c3e50;
+
+                &.router-link-exact-active {
+                  color: #42b983;
+                }
+              }
             }
           }
+
+          .monnaie {
+            img {
+              width: 12px;
+              height: 12px;
+              position: absolute;
+              margin-top: 3px;
+              margin-left: 3px;
+            }
+          }
+        }
+
+        .corps {
+          overflow: auto;
         }
       }
     }

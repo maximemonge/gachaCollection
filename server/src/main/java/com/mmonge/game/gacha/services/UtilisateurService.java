@@ -54,6 +54,7 @@ public class UtilisateurService {
             utilisateur.setMotDePasse(passwordEncoder.encode(motDePasse));
             utilisateur.setDateCreation(now);
             utilisateur.setDateModification(now);
+            utilisateur.setMonnaie(10L);
             return utilisateurMapper.utilisateurEntityToDto(utilisateurRepository.save(utilisateur));
         }
     }

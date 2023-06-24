@@ -25,10 +25,12 @@ public class UtilisateurMapperTest {
         UtilisateurEntity entity = new UtilisateurEntity();
         entity.setId(1L);
         entity.setIdentifiant("toto");
+        entity.setMonnaie(12L);
 
         UtilisateurDTO dto = utilisateurMapper.utilisateurEntityToDto(entity);
 
         assertSame(1L, dto.getId());
         assertEquals("toto", dto.getIdentifiant());
+        assertSame(12L, dto.getMonnaie());
     }
 }

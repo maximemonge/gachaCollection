@@ -9,6 +9,7 @@ export interface ObjetCollection {
 export interface Utilisateur {
     id: number,
     identifiant: string,
+    monnaie: number,
 }
 
 export interface UtilisateurCollection {

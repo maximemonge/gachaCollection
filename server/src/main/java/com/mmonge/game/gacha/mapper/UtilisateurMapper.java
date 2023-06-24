@@ -12,6 +12,7 @@ public class UtilisateurMapper {
         if (entity != null) {
             dto.setId(entity.getId());
             dto.setIdentifiant(entity.getIdentifiant());
+            dto.setMonnaie(entity.getMonnaie());
         }
         return dto;
     }

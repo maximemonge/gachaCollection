@@ -41,6 +41,7 @@ public class UtilisateurServiceTest {
 
         assertNotNull(res.getId());
         assertEquals("mmonge", res.getIdentifiant());
+        assertSame(100L, res.getMonnaie());
     }
 
     @Test
@@ -83,5 +84,6 @@ public class UtilisateurServiceTest {
 
         assertNotNull(res.getId());
         assertEquals(identifiant, res.getIdentifiant());
+        assertSame(10L, res.getMonnaie());
     }
 }

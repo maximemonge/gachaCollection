@@ -2,8 +2,12 @@
 import { PropType, defineComponent } from "vue";
 import axios from "axios";
 import ObjetCollectionComponent from "../components/ObjetCollectionComponent.vue";
-import { ObjetCollection, UtilisateurCollection } from "@/model/models";
-import { useRoute } from "vue-router";
+import {
+  ObjetCollection,
+  Utilisateur,
+  UtilisateurCollection,
+} from "@/model/models";
+import { getUtilisateurFromRoute } from "@/utils/utilisateurUtils";
 
 export default defineComponent({
   name: "CollectionView",
@@ -14,9 +18,8 @@ export default defineComponent({
     let objetCollectionParCategories: Map<string, ObjetCollection[]> =
       new Map();
     let mesObjets: UtilisateurCollection[] = [];
-    const route = useRoute();
-    const utilisateurId = route.query.utilisateurId;
-    return { objetCollectionParCategories, mesObjets, utilisateurId };
+    const utilisateur: Utilisateur = getUtilisateurFromRoute();
+    return { objetCollectionParCategories, mesObjets, utilisateur };
   },
   mounted() {
     this.getAllObjetCollection();
@@ -37,7 +40,8 @@ export default defineComponent({
     async getMaCollection() {
       await axios
         .get(
-          "http://localhost:3000/objetCollection/all/user/" + this.utilisateurId
+          "http://localhost:3000/objetCollection/all/user/" +
+            this.utilisateur.id
         )
         .then((reponse) => {
           this.mesObjets = reponse.data;

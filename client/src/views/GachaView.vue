@@ -7,6 +7,7 @@ import { getUtilisateurFromRoute } from "@/utils/utilisateurUtils";
 
 export default defineComponent({
   name: "GachaView",
+  emits: ["perteMonnaie"],
   data() {
     let objetCollection: ObjetCollection = undefined!;
     const utilisateur: Utilisateur = getUtilisateurFromRoute();

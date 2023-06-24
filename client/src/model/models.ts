@@ -16,3 +16,9 @@ export interface UtilisateurCollection {
     objetCollectionId: number,
     quantite: number,
 }
+
+export enum NotificationEnum {
+    OK = "OK",
+    WARNING = "WARNING",
+    ERREUR = "ERREUR"
+}

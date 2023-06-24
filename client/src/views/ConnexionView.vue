@@ -1,9 +1,16 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import axios from "axios";
+import NotificationComponent from "@/components/NotificationComponent.vue";
+import { NotificationEnum } from "@/model/models";
 
 export default defineComponent({
   name: "ConnexionView",
+  emits: ["utilisateurConnecte"],
+  setup() {
+    const notificationConnexion = ref(NotificationComponent);
+    return { notificationConnexion };
+  },
   data() {
     let identifiant: string = undefined!;
     let motDePasse: string = undefined!;
@@ -22,13 +29,16 @@ export default defineComponent({
             this.$emit("utilisateurConnecte", reponse.data);
           })
           .catch(() => {
-            console.log("Échec de la connexion");
+            this.notificationConnexion.afficherNotificationErreur(
+              "Identifiant ou mot de passe incorrect"
+            );
           });
       } else {
-        console.log("TODO CREER NOTIFICATION");
+        this.notificationConnexion.afficherNotificationWarning(
+          "Veuillez remplir tous les champs"
+        );
       }
     },
-
     async creerUtilisateur() {
       if (this.validerChampsFormulaire()) {
         await axios
@@ -40,17 +50,21 @@ export default defineComponent({
             this.$emit("utilisateurConnecte", reponse.data);
           })
           .catch(() => {
-            console.log("Échec de la création de l'utilisateur");
+            this.notificationConnexion.afficherNotificationErreur(
+              "Échec de la création de l'utilisateur"
+            );
           });
       } else {
-        console.log("TODO CREER NOTIFICATION");
+        this.notificationConnexion.afficherNotificationWarning(
+          "Veuillez remplir tous les champs"
+        );
       }
     },
-
     validerChampsFormulaire() {
       return this.identifiant?.length && this.motDePasse?.length;
     },
   },
+  components: { NotificationComponent },
 });
 </script>
 
@@ -81,6 +95,7 @@ export default defineComponent({
       </div>
     </form>
   </main>
+  <NotificationComponent ref="notificationConnexion"></NotificationComponent>
 </template>
 
 <style lang="less">

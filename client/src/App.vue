@@ -4,6 +4,11 @@ import ConnexionView from "./views/ConnexionView.vue";
 import { Utilisateur } from "./model/models";
 import { useI18n } from "vue-i18n";
 import { getLangues } from "./traductions/langues";
+import {
+  getUtilisateurFromCache,
+  removeUtilisateurFromCache,
+  setUtilisateurDansCache,
+} from "./utils/utilisateurUtils";
 
 export default defineComponent({
   name: "MainView",
@@ -18,26 +23,38 @@ export default defineComponent({
     return { utilisateur, langues, i18n, trad };
   },
 
+  computed: {
+    getUtilisateurConnecte(): Utilisateur {
+      if (!this.utilisateur) {
+        this.utilisateur = getUtilisateurFromCache();
+      }
+      return this.utilisateur;
+    },
+  },
+
   methods: {
     connecterUtilisateur(utilisateur: Utilisateur) {
       this.utilisateur = utilisateur;
+      setUtilisateurDansCache(this.utilisateur);
       this.$router.push("/");
     },
 
     deconnecterUtilisateur() {
       this.utilisateur = undefined!;
+      removeUtilisateurFromCache();
       this.$router.push("/");
     },
 
     perteMonnaie(cout: number) {
       this.utilisateur.monnaie -= cout;
+      setUtilisateurDansCache(this.utilisateur);
     },
   },
 });
 </script>
 
 <template>
-  <div class="menu" v-if="utilisateur">
+  <div class="menu" v-if="getUtilisateurConnecte">
     <div class="bandeau">
       <div class="titre">
         <span class="bienvenue">{{
@@ -51,10 +68,6 @@ export default defineComponent({
           <router-link
             :to="{
               path: '/gacha',
-              query: {
-                utilisateurId: utilisateur.id,
-                utilisateurMonnaie: utilisateur.monnaie,
-              },
             }"
             >{{ trad("header.menu.gacha") }}</router-link
           >

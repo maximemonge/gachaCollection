@@ -3,7 +3,10 @@ import { defineComponent } from "vue";
 import axios from "axios";
 import { ObjetCollection, Utilisateur } from "@/model/models";
 import ObjetCollectionComponent from "@/components/ObjetCollectionComponent.vue";
-import { getUtilisateurFromRoute } from "@/utils/utilisateurUtils";
+import {
+  getUtilisateurFromCache,
+  getUtilisateurFromRoute,
+} from "@/utils/utilisateurUtils";
 import { useI18n } from "vue-i18n";
 
 export default defineComponent({
@@ -12,7 +15,7 @@ export default defineComponent({
   data() {
     const trad = useI18n().t;
     let objetCollection: ObjetCollection = undefined!;
-    const utilisateur: Utilisateur = getUtilisateurFromRoute();
+    const utilisateur: Utilisateur = getUtilisateurFromCache();
     const coutGacha: number = 1;
     return { objetCollection, utilisateur, coutGacha, trad };
   },

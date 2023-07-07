@@ -3,7 +3,11 @@ import { defineComponent } from "vue";
 import ConnexionView from "./views/ConnexionView.vue";
 import { Utilisateur } from "./model/models";
 import { useI18n } from "vue-i18n";
-import { getLangues } from "./traductions/langues";
+import {
+  LANGAGE_CACHE,
+  getLangues,
+  setLangageDansCache,
+} from "./utils/languesUtils";
 import {
   getUtilisateurFromCache,
   removeUtilisateurFromCache,
@@ -23,12 +27,25 @@ export default defineComponent({
     return { utilisateur, langues, i18n, trad };
   },
 
+  mounted() {
+    const langueStockee = sessionStorage.getItem(LANGAGE_CACHE);
+    if (langueStockee) {
+      this.i18n.locale = langueStockee;
+    }
+  },
+
   computed: {
     getUtilisateurConnecte(): Utilisateur {
       if (!this.utilisateur) {
         this.utilisateur = getUtilisateurFromCache();
       }
       return this.utilisateur;
+    },
+  },
+
+  watch: {
+    "i18n.locale": (langueChoisie: string) => {
+      setLangageDansCache(langueChoisie);
     },
   },
 

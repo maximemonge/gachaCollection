@@ -3,6 +3,7 @@ import { defineComponent, ref } from "vue";
 import axios from "axios";
 import NotificationComponent from "@/components/NotificationComponent.vue";
 import { NotificationEnum } from "@/model/models";
+import { useI18n } from "vue-i18n";
 
 export default defineComponent({
   name: "ConnexionView",
@@ -12,10 +13,11 @@ export default defineComponent({
     return { notificationConnexion };
   },
   data() {
+    const trad = useI18n().t;
     let identifiant: string = undefined!;
     let motDePasse: string = undefined!;
     let creerCompte: boolean = false;
-    return { identifiant, motDePasse, creerCompte };
+    return { identifiant, motDePasse, creerCompte, trad };
   },
   methods: {
     async connecterUtilisateur() {
@@ -30,12 +32,12 @@ export default defineComponent({
           })
           .catch(() => {
             this.notificationConnexion.afficherNotificationErreur(
-              "Identifiant ou mot de passe incorrect"
+              this.trad("connexion.erreur.mauvaisids")
             );
           });
       } else {
         this.notificationConnexion.afficherNotificationWarning(
-          "Veuillez remplir tous les champs"
+          this.trad("connexion.erreur.champsmanquants")
         );
       }
     },
@@ -51,12 +53,12 @@ export default defineComponent({
           })
           .catch(() => {
             this.notificationConnexion.afficherNotificationErreur(
-              "Échec de la création de l'utilisateur"
+              this.trad("connexion.erreur.creationuser")
             );
           });
       } else {
         this.notificationConnexion.afficherNotificationWarning(
-          "Veuillez remplir tous les champs"
+          this.trad("connexion.erreur.champsmanquants")
         );
       }
     },
@@ -72,25 +74,31 @@ export default defineComponent({
   <main class="connexion">
     <form>
       <div class="inputs">
-        <input type="text" v-model="identifiant" placeholder="Identifiant" />
+        <input
+          type="text"
+          v-model="identifiant"
+          :placeholder="trad('connexion.identifiant')"
+        />
         <input
           type="password"
           v-model="motDePasse"
-          placeholder="Mot de passe"
+          :placeholder="trad('connexion.motdepasse')"
         />
       </div>
       <div v-if="creerCompte" class="boutons">
         <button class="validation" type="button" @click="creerUtilisateur">
-          S'inscrire
+          {{ trad("connexion.sinscrire") }}
         </button>
-        <button type="button" @click="creerCompte = false">Retour</button>
+        <button type="button" @click="creerCompte = false">
+          {{ trad("connexion.retour") }}
+        </button>
       </div>
       <div v-else class="boutons">
         <button class="validation" type="button" @click="connecterUtilisateur">
-          Connexion
+          {{ trad("connexion.connexion") }}
         </button>
         <button type="button" @click="creerCompte = true">
-          Je n'ai pas de compte
+          {{ trad("connexion.creercompte") }}
         </button>
       </div>
     </form>

@@ -7,7 +7,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="accueil"></div>
+  <main class="accueil"></main>
 </template>
 
 <style lang="less"></style>

@@ -28,5 +28,8 @@ export const CODE_PAYS = {
     gacha: {
         obtenirobjet: '',
         objetobtenu: ''
+    },
+    404: {
+        erreur: ''
     }
 }

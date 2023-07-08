@@ -60,13 +60,13 @@ export default defineComponent({
 </script>
 
 <template>
-  <div
+  <main
     v-if="message"
     class="rectangle"
     :style="{ background: couleurBackground() }"
   >
     <span>{{ message }}</span>
-  </div>
+  </main>
 </template>
 
 <style lang="less">

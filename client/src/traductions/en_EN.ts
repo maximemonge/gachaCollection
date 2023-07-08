@@ -28,5 +28,8 @@ export const en = {
     gacha: {
         obtenirobjet: 'Get an item',
         objetobtenu: 'Item obtained'
+    },
+    404: {
+        erreur: 'Oh no this page doesn\'t exist, it\'s so sad :\'('
     }
 }

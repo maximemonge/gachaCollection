@@ -71,37 +71,41 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="objet-collection" :style="{ borderColor: getCouleurRarete() }">
-    <div class="item">
+  <main class="objetcollection" :style="{ borderColor: getCouleurRarete() }">
+    <div class="objetcollection-item">
       <span
-        :class="[quantite && afficherQuantite ? '' : 'cache']"
-        class="quantite"
+        :class="[
+          quantite && afficherQuantite ? '' : 'objetcollection-item-cache',
+        ]"
+        class="objetcollection-item-quantite"
         >x{{ quantite }}</span
       >
       <img
-        :class="[objetDansLaCollection() ? '' : 'desactive']"
+        :class="[
+          objetDansLaCollection() ? '' : 'objetcollection-item-desactive',
+        ]"
         :src="getImageSrc()"
       />
       <span>{{ objCollection?.code }}</span>
     </div>
-  </div>
+  </main>
 </template>
 
 <style lang="less">
-.objet-collection {
+.objetcollection {
   width: 200px;
   height: 200px;
   border: 7px solid;
 
-  .item {
+  &-item {
     display: flex;
     flex-direction: column;
 
-    .cache {
+    &-cache {
       visibility: hidden;
     }
 
-    .quantite {
+    &-quantite {
       margin-left: 10px;
       text-align: initial;
       float: left;
@@ -118,7 +122,7 @@ export default defineComponent({
       margin-top: 5px;
     }
 
-    .desactive {
+    &-desactive {
       filter: brightness(0);
     }
   }

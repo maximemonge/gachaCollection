@@ -13,11 +13,10 @@ export default defineComponent({
   name: "GachaView",
   emits: ["perteMonnaie"],
   data() {
-    const trad = useI18n().t;
     let objetCollection: ObjetCollection = undefined!;
     const utilisateur: Utilisateur = getUtilisateurFromCache();
     const coutGacha: number = 1;
-    return { objetCollection, utilisateur, coutGacha, trad };
+    return { objetCollection, utilisateur, coutGacha, trad: useI18n().t };
   },
 
   methods: {
@@ -54,18 +53,18 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="gacha">
+  <main class="gacha">
     <span>{{ trad("gacha.obtenirobjet") }}</span>
     <button
       :key="'obtentionObjet' + coutGacha"
       :disabled="!isMonnaieSuffisante"
-      class="boutonObtention monnaie"
+      class="gacha-boutonObtention gacha-monnaie"
       type="button"
       @click="obtenirUnObjet"
     >
       -{{ coutGacha }} <img src="../assets/argent.png" />
     </button>
-    <div v-if="objetCollection" class="obtention">
+    <div v-if="objetCollection" class="gacha-obtention">
       <span>{{ trad("gacha.objetobtenu") }}</span>
       <ObjetCollectionComponent
         :obj-collection="objetCollection"
@@ -73,7 +72,7 @@ export default defineComponent({
         :afficherQuantite="false"
       ></ObjetCollectionComponent>
     </div>
-  </div>
+  </main>
 </template>
 
 <style lang="less">
@@ -85,7 +84,7 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
 
-  .monnaie {
+  &-monnaie {
     img {
       width: 12px;
       height: 12px;
@@ -93,14 +92,14 @@ export default defineComponent({
     }
   }
 
-  .boutonObtention {
+  &-boutonObtention {
     margin-top: 5px;
     height: 25px;
     width: 50px;
     font-size: 16px;
   }
 
-  .obtention {
+  &-obtention {
     width: 100%;
     display: flex;
     flex-direction: column;

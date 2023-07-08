@@ -2,7 +2,6 @@
 import { defineComponent, ref } from "vue";
 import axios from "axios";
 import NotificationComponent from "@/components/NotificationComponent.vue";
-import { NotificationEnum } from "@/model/models";
 import { useI18n } from "vue-i18n";
 
 export default defineComponent({
@@ -13,11 +12,10 @@ export default defineComponent({
     return { notificationConnexion };
   },
   data() {
-    const trad = useI18n().t;
     let identifiant: string = undefined!;
     let motDePasse: string = undefined!;
     let creerCompte: boolean = false;
-    return { identifiant, motDePasse, creerCompte, trad };
+    return { identifiant, motDePasse, creerCompte, trad: useI18n().t };
   },
   methods: {
     async connecterUtilisateur() {
@@ -73,7 +71,7 @@ export default defineComponent({
 <template>
   <main class="connexion">
     <form>
-      <div class="inputs">
+      <div class="connexion-inputs">
         <input
           type="text"
           v-model="identifiant"
@@ -85,16 +83,24 @@ export default defineComponent({
           :placeholder="trad('connexion.motdepasse')"
         />
       </div>
-      <div v-if="creerCompte" class="boutons">
-        <button class="validation" type="button" @click="creerUtilisateur">
+      <div v-if="creerCompte" class="connexion-boutons">
+        <button
+          class="connexion-boutons-validation"
+          type="button"
+          @click="creerUtilisateur"
+        >
           {{ trad("connexion.sinscrire") }}
         </button>
         <button type="button" @click="creerCompte = false">
           {{ trad("connexion.retour") }}
         </button>
       </div>
-      <div v-else class="boutons">
-        <button class="validation" type="button" @click="connecterUtilisateur">
+      <div v-else class="connexion-boutons">
+        <button
+          class="connexion-boutons-validation"
+          type="button"
+          @click="connecterUtilisateur"
+        >
           {{ trad("connexion.connexion") }}
         </button>
         <button type="button" @click="creerCompte = true">
@@ -112,16 +118,18 @@ export default defineComponent({
   margin-right: 30%;
   border: 1px black solid;
   text-align: center;
-  .inputs {
+
+  &-inputs {
     padding: 10px;
     input {
       margin-left: 5px;
     }
   }
-  .boutons {
+
+  &-boutons {
     padding: 10px;
 
-    .validation {
+    &-validation {
       background-color: rgb(129, 250, 129);
     }
 

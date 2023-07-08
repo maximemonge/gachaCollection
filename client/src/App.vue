@@ -21,10 +21,9 @@ export default defineComponent({
   },
   data() {
     const i18n = useI18n();
-    const trad = i18n.t;
     let utilisateur: Utilisateur = undefined!;
     const langues = getLangues();
-    return { utilisateur, langues, i18n, trad };
+    return { utilisateur, langues, i18n, trad: i18n.t };
   },
 
   mounted() {
@@ -70,58 +69,65 @@ export default defineComponent({
 });
 </script>
 
-<template>
-  <div class="menu" v-if="getUtilisateurConnecte">
-    <div class="bandeau">
-      <div class="titre">
-        <span class="bienvenue">{{
+<template class="app">
+  <div class="app-header">
+    <select class="app-header-langues" v-model="i18n.locale">
+      <option v-for="langue in langues" :value="langue.id">
+        {{ langue.libelle }}
+      </option>
+    </select>
+    <button
+      v-if="getUtilisateurConnecte"
+      class="app-header-deconnexion"
+      type="button"
+      @click="deconnecterUtilisateur"
+    >
+      {{ trad("header.deconnexion") }}
+    </button>
+  </div>
+
+  <div class="app-body" v-if="getUtilisateurConnecte">
+    <div class="app-body-informations-utilisateur">
+      <div class="app-body-informations-utilisateur-pseudo">
+        <span>{{
           trad("header.bienvenue.user", {
             identifiant: utilisateur.identifiant,
           })
         }}</span>
-        <nav>
-          <router-link to="/">{{ trad("header.menu.accueil") }}</router-link>
-          |
-          <router-link
-            :to="{
-              path: '/gacha',
-            }"
-            >{{ trad("header.menu.gacha") }}</router-link
-          >
-          |
-          <router-link
-            :to="{
-              path: '/collection',
-              query: { utilisateurId: utilisateur.id },
-            }"
-            >{{ trad("header.menu.macollection") }}</router-link
-          >
-          |
-          <router-link to="/profil">{{
-            trad("header.menu.profil")
-          }}</router-link>
-        </nav>
-        <select class="langues" v-model="i18n.locale">
-          <option v-for="langue in langues" :value="langue.id">
-            {{ langue.libelle }}
-          </option>
-        </select>
-        <button
-          class="deconnexion"
-          type="button"
-          @click="deconnecterUtilisateur"
-        >
-          {{ trad("header.deconnexion") }}
-        </button>
       </div>
-      <div class="monnaie" :key="utilisateur.monnaie">
+      <div
+        class="app-body-informations-utilisateur-monnaie"
+        :key="utilisateur.monnaie"
+      >
         <span
           >{{ trad("header.argent") }} : {{ utilisateur.monnaie
           }}<img src="./assets/argent.png"
         /></span>
       </div>
     </div>
-    <div class="corps">
+    <div class="app-body-menu">
+      <nav>
+        <router-link to="/">{{ trad("header.menu.accueil") }}</router-link>
+        |
+        <router-link
+          :to="{
+            path: '/gacha',
+          }"
+          >{{ trad("header.menu.gacha") }}</router-link
+        >
+        |
+        <router-link
+          :to="{
+            path: '/collection',
+            query: { utilisateurId: utilisateur.id },
+          }"
+          >{{ trad("header.menu.macollection") }}</router-link
+        >
+        |
+        <router-link to="/profil">{{ trad("header.menu.profil") }}</router-link>
+      </nav>
+    </div>
+    <div class="app-body-contenu">
       <router-view :key="$route.path" @perte-monnaie="perteMonnaie" />
     </div>
   </div>
@@ -153,31 +159,53 @@ html {
       right: 0;
       margin: 5px;
 
-      .menu {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-
-        .bandeau {
-          flex-grow: 0;
+      .app {
+        &-header {
+          position: absolute;
           width: 100%;
+          text-align: end;
 
-          .titre {
-            display: flex;
-            flex-direction: row;
+          &-deconnexion {
+            margin-left: 5px;
+          }
+        }
+
+        &-body {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          margin-top: 25px;
+
+          &-informations-utilisateur {
+            flex-grow: 0;
             width: 100%;
 
-            .langues {
-              margin-right: 5px;
+            &-pseudo {
+              display: flex;
+              flex-direction: row;
+              width: 100%;
+
+              span {
+                flex-grow: 1;
+              }
             }
 
-            .bienvenue {
-              flex-grow: 1;
+            &-monnaie {
+              img {
+                width: 12px;
+                height: 12px;
+                margin-top: 3px;
+                margin-left: 3px;
+              }
             }
+          }
+
+          &-menu {
+            position: absolute;
+            width: 100%;
+            text-align: center;
 
             nav {
-              flex-grow: 1;
-
               a {
                 font-weight: bold;
                 color: #2c3e50;
@@ -189,18 +217,9 @@ html {
             }
           }
 
-          .monnaie {
-            img {
-              width: 12px;
-              height: 12px;
-              margin-top: 3px;
-              margin-left: 3px;
-            }
+          &-contenu {
+            overflow: auto;
           }
-        }
-
-        .corps {
-          overflow: auto;
         }
       }
     }

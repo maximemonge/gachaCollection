@@ -60,14 +60,18 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="collection">
-    <div class="espace">
+  <main class="collection">
+    <div class="collection-espace">
       <template v-for="(value, key) in objetCollectionParCategories">
-        <div class="objetsParCategorie espace">
-          <span class="categorie">{{ key }}</span>
-          <div class="objets">
+        <div
+          class="collection-espace-objetsParCategorie collection-espace-marge"
+        >
+          <span class="collection-espace-objetsParCategorie-categorie">{{
+            key
+          }}</span>
+          <div class="collection-espace-objetsParCategorie-objets">
             <ObjetCollectionComponent
-              class="marge"
+              class="collection-espace-objetsParCategorie-objets-marge"
               v-for="objet in value"
               :obj-collection="castObjetEnObjetCollection(objet)"
               :mes-objets="mesObjets"
@@ -76,7 +80,7 @@ export default defineComponent({
           </div></div
       ></template>
     </div>
-  </div>
+  </main>
 </template>
 
 <style lang="less">
@@ -88,27 +92,31 @@ export default defineComponent({
   flex-wrap: wrap;
   overflow: auto;
 
-  .espace {
-    margin-bottom: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
+  &-espace {
+    margin: 10px;
 
-    .objetsParCategorie {
+    &-marge {
+      margin-bottom: 10px;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    &-objetsParCategorie {
       display: flex;
       flex-direction: column;
 
-      .categorie {
+      &-categorie {
         font-size: 30px;
         margin-bottom: 30px;
         margin-top: 30px;
         text-align: left;
       }
 
-      .objets {
+      &-objets {
         display: inline-flex;
         flex-flow: wrap;
 
-        .marge {
+        &-marge {
           margin-bottom: 10px;
           margin-left: 10px;
           margin-right: 10px;

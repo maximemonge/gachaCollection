@@ -28,5 +28,8 @@ export const jp = {
     gacha: {
         obtenirobjet: 'アイテムを獲得する',
         objetobtenu: '獲得したアイテム'
+    },
+    404: {
+        erreur: 'ああ、このページは存在しない、とても悲しい :\'('
     }
 }

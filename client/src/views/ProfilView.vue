@@ -7,5 +7,5 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="profil"></div>
+  <main class="profil"></main>
 </template>

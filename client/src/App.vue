@@ -149,7 +149,7 @@ html {
     width: 100%;
 
     #app {
-      height: 100%;
+      flex-grow: 1;
       display: flex;
       flex-direction: column;
       position: fixed;
@@ -174,7 +174,6 @@ html {
           height: 100%;
           display: flex;
           flex-direction: column;
-          margin-top: 25px;
 
           &-informations-utilisateur {
             flex-grow: 0;
@@ -204,6 +203,7 @@ html {
             position: absolute;
             width: 100%;
             text-align: center;
+            margin-top: 25px;
 
             nav {
               a {
@@ -218,7 +218,9 @@ html {
           }
 
           &-contenu {
-            overflow: auto;
+            margin-top: 15px;
+            overflow: scroll;
+            overflow-x: hidden;
           }
         }
       }

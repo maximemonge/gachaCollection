@@ -85,7 +85,6 @@ export default defineComponent({
 
 <style lang="less">
 .collection {
-  flex-grow: 1;
   text-align: center;
   display: flex;
   flex-direction: row;

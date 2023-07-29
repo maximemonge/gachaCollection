@@ -5,6 +5,7 @@ import { Utilisateur } from "./model/models";
 import { useI18n } from "vue-i18n";
 import {
   LANGAGE_CACHE,
+  getLangageDansCache,
   getLangues,
   setLangageDansCache,
 } from "./utils/languesUtils";
@@ -14,20 +15,24 @@ import {
   setUtilisateurDansCache,
 } from "./utils/utilisateurUtils";
 
+import SwitchComponent from "./components/SwitchComponent.vue";
+import { ThemeEnum, getThemeDansCache } from "./utils/themeUtils";
 export default defineComponent({
   name: "MainView",
   components: {
     ConnexionView,
+    SwitchComponent,
   },
   data() {
     const i18n = useI18n();
     let utilisateur: Utilisateur = undefined!;
+    let theme: any = ThemeEnum.CLAIR;
     const langues = getLangues();
-    return { utilisateur, langues, i18n, trad: i18n.t };
+    return { utilisateur, langues, i18n, trad: i18n.t, theme };
   },
 
   mounted() {
-    const langueStockee = sessionStorage.getItem(LANGAGE_CACHE);
+    const langueStockee: string = getLangageDansCache();
     if (langueStockee) {
       this.i18n.locale = langueStockee;
     }
@@ -39,6 +44,14 @@ export default defineComponent({
         this.utilisateur = getUtilisateurFromCache();
       }
       return this.utilisateur;
+    },
+
+    getTheme(): ThemeEnum {
+      const themeCache: ThemeEnum = getThemeDansCache();
+      if (themeCache) {
+        this.theme = themeCache;
+      }
+      return this.theme;
     },
   },
 
@@ -65,12 +78,23 @@ export default defineComponent({
       this.utilisateur.monnaie -= cout;
       setUtilisateurDansCache(this.utilisateur);
     },
+
+    changerTheme(nouveauTheme: ThemeEnum) {
+      this.theme = nouveauTheme;
+    },
   },
 });
 </script>
 
 <template class="app">
-  <div class="app-header">
+  <div
+    class="app-header"
+    :class="[theme === 'SOMBRE' ? 'theme-sombre' : 'theme-clair']"
+  >
+    <SwitchComponent
+      :theme="getTheme"
+      @update:changer-theme="changerTheme"
+    ></SwitchComponent>
     <select class="app-header-langues" v-model="i18n.locale">
       <option v-for="langue in langues" :value="langue.id">
         {{ langue.libelle }}
@@ -86,7 +110,11 @@ export default defineComponent({
     </button>
   </div>
 
-  <div class="app-body" v-if="getUtilisateurConnecte">
+  <div
+    class="app-body"
+    :class="[theme === 'SOMBRE' ? 'theme-sombre' : 'theme-clair']"
+    v-if="getUtilisateurConnecte"
+  >
     <div class="app-body-informations-utilisateur">
       <div class="app-body-informations-utilisateur-pseudo">
         <span>{{
@@ -101,7 +129,7 @@ export default defineComponent({
       >
         <span
           >{{ trad("header.argent") }} : {{ utilisateur.monnaie
-          }}<img src="./assets/argent.png"
+          }}<img class="inverser-couleurs" src="./assets/argent.png"
         /></span>
       </div>
     </div>
@@ -131,98 +159,86 @@ export default defineComponent({
       <router-view :key="$route.path" @perte-monnaie="perteMonnaie" />
     </div>
   </div>
-  <ConnexionView v-else @utilisateur-connecte="connecterUtilisateur" />
+  <ConnexionView
+    v-else
+    @utilisateur-connecte="connecterUtilisateur"
+    :theme="getTheme"
+  />
 </template>
 
 <style lang="less">
-html {
+@import "common/less/theme.less";
+#app {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 
-  body {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
+  .app {
+    &-header {
+      position: absolute;
+      width: 100%;
+      text-align: end;
+      height: 100%;
 
-    #app {
-      flex-grow: 1;
+      &-deconnexion {
+        margin-left: 5px;
+      }
+    }
+
+    &-body {
+      height: 100%;
       display: flex;
       flex-direction: column;
-      position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      margin: 5px;
 
-      .app {
-        &-header {
-          position: absolute;
-          width: 100%;
-          text-align: end;
+      &-informations-utilisateur {
+        flex-grow: 0;
+        z-index: 1;
+        width: 50%;
 
-          &-deconnexion {
-            margin-left: 5px;
-          }
-        }
-
-        &-body {
-          height: 100%;
+        &-pseudo {
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
+          width: 100%;
 
-          &-informations-utilisateur {
-            flex-grow: 0;
-            width: 100%;
-
-            &-pseudo {
-              display: flex;
-              flex-direction: row;
-              width: 100%;
-
-              span {
-                flex-grow: 1;
-              }
-            }
-
-            &-monnaie {
-              img {
-                width: 12px;
-                height: 12px;
-                margin-top: 3px;
-                margin-left: 3px;
-              }
-            }
-          }
-
-          &-menu {
-            position: absolute;
-            width: 100%;
-            text-align: center;
-            margin-top: 25px;
-
-            nav {
-              a {
-                font-weight: bold;
-                color: #2c3e50;
-
-                &.router-link-exact-active {
-                  color: #42b983;
-                }
-              }
-            }
-          }
-
-          &-contenu {
-            margin-top: 15px;
-            overflow: scroll;
-            overflow-x: hidden;
+          span {
+            flex-grow: 1;
           }
         }
+
+        &-monnaie {
+          img {
+            width: 12px;
+            height: 12px;
+            margin-top: 3px;
+            margin-left: 3px;
+          }
+        }
+      }
+
+      &-menu {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        margin-top: 25px;
+        z-index: 1;
+
+        nav {
+          a {
+            font-weight: bold;
+          }
+        }
+      }
+
+      &-contenu {
+        margin-top: 15px;
+        overflow: auto;
+        overflow-x: hidden;
+        z-index: 1;
       }
     }
   }

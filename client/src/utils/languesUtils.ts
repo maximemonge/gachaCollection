@@ -1,5 +1,3 @@
-import { useI18n } from "vue-i18n";
-
 export const LANGAGE_CACHE = "LANGAGE_CACHE";
 
 export function getLangues() {
@@ -12,4 +10,8 @@ export function getLangues() {
 
 export function setLangageDansCache(langage: string) {
     sessionStorage.setItem(LANGAGE_CACHE, langage);
+}
+
+export function getLangageDansCache(): string {
+    return sessionStorage.getItem(LANGAGE_CACHE)!;
 }

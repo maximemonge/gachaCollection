@@ -1,8 +1,9 @@
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { PropType, defineComponent, ref } from "vue";
 import axios from "axios";
 import NotificationComponent from "@/components/NotificationComponent.vue";
 import { useI18n } from "vue-i18n";
+import { ThemeEnum } from "@/utils/themeUtils";
 
 export default defineComponent({
   name: "ConnexionView",
@@ -16,6 +17,9 @@ export default defineComponent({
     let motDePasse: string = undefined!;
     let creerCompte: boolean = false;
     return { identifiant, motDePasse, creerCompte, trad: useI18n().t };
+  },
+  props: {
+    theme: ThemeEnum as unknown as PropType<ThemeEnum>,
   },
   methods: {
     async connecterUtilisateur() {
@@ -69,7 +73,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <main class="connexion">
+  <main
+    class="connexion"
+    :class="[theme === 'SOMBRE' ? 'theme-sombre' : 'theme-clair']"
+  >
     <form>
       <div class="connexion-inputs">
         <input
@@ -91,7 +98,11 @@ export default defineComponent({
         >
           {{ trad("connexion.sinscrire") }}
         </button>
-        <button type="button" @click="creerCompte = false">
+        <button
+          type="button"
+          @click="creerCompte = false"
+          class="connexion-boutons-autre"
+        >
           {{ trad("connexion.retour") }}
         </button>
       </div>
@@ -103,7 +114,11 @@ export default defineComponent({
         >
           {{ trad("connexion.connexion") }}
         </button>
-        <button type="button" @click="creerCompte = true">
+        <button
+          type="button"
+          @click="creerCompte = true"
+          class="connexion-boutons-autre"
+        >
           {{ trad("connexion.creercompte") }}
         </button>
       </div>
@@ -113,11 +128,13 @@ export default defineComponent({
 </template>
 
 <style lang="less">
+@import "../common/less/theme.less";
 .connexion {
   margin-left: 30%;
   margin-right: 30%;
-  border: 1px black solid;
+  border: 1px solid;
   text-align: center;
+  z-index: 1;
 
   &-inputs {
     padding: 10px;
@@ -130,7 +147,13 @@ export default defineComponent({
     padding: 10px;
 
     &-validation {
-      background-color: rgb(129, 250, 129);
+      border-width: 1px;
+      background-color: #81fa81;
+    }
+
+    &-autre {
+      border-width: 1px;
+      background-color: #e0e3e0;
     }
 
     button {

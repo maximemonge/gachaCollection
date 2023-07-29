@@ -62,7 +62,8 @@ export default defineComponent({
       type="button"
       @click="obtenirUnObjet"
     >
-      -{{ coutGacha }} <img src="../assets/argent.png" />
+      -{{ coutGacha }}
+      <img class="inverser-couleurs" src="../assets/argent.png" />
     </button>
     <div v-if="objetCollection" class="gacha-obtention">
       <span>{{ trad("gacha.objetobtenu") }}</span>

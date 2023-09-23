@@ -3,12 +3,8 @@ package com.mmonge.game.gacha.services;
 import com.mmonge.game.gacha.mapper.ImageMapper;
 import com.mmonge.game.gacha.mapper.ObjetCollectionMapper;
 import com.mmonge.game.gacha.model.dto.ObjetCollectionDTO;
-import com.mmonge.game.gacha.model.entity.UtilisateurCollectionEntity;
-import com.mmonge.game.gacha.model.entity.UtilisateurEntity;
 import com.mmonge.game.gacha.model.enums.RareteEnum;
 import com.mmonge.game.gacha.services.repository.ObjetCollectionRepository;
-import com.mmonge.game.gacha.services.repository.UtilisateurCollectionRepository;
-import com.mmonge.game.gacha.services.repository.UtilisateurRepository;
 import com.mmonge.game.gacha.utils.RareteUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +20,6 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,18 +32,13 @@ public class ObjetCollectionServiceTest {
 
     @Autowired
     private ObjetCollectionRepository objetCollectionRepository;
-    @Autowired
-    private UtilisateurCollectionRepository utilisateurCollectionRepository;
-    @Autowired
-    private UtilisateurRepository utilisateurRepository;
-
     @Mock
     RareteUtils rareteUtils;
     private ObjetCollectionService objetCollectionService;
 
     @BeforeEach
     public void beforeAll() {
-        objetCollectionService = new ObjetCollectionService(objetCollectionRepository, utilisateurCollectionRepository, new ObjetCollectionMapper(new ImageMapper()), rareteUtils);
+        objetCollectionService = new ObjetCollectionService(objetCollectionRepository, new ObjetCollectionMapper(new ImageMapper()), rareteUtils);
     }
 
     @Test
@@ -64,16 +54,8 @@ public class ObjetCollectionServiceTest {
     public void test_obtenirUnObjet() {
         Mockito.when(rareteUtils.getRareteAleatoire()).thenReturn(RareteEnum.M);
 
-        ObjetCollectionDTO res = objetCollectionService.obtenirUnObjet(1L, 1L);
-        List<UtilisateurCollectionEntity> collection = utilisateurCollectionRepository.findAllByUtilisateurId(1L);
-        Optional<UtilisateurEntity> utilisateur = utilisateurRepository.findById(1L);
+        ObjetCollectionDTO res = objetCollectionService.obtenirUnObjet();
 
         assertEquals("Jafar", res.getCode());
-        assertSame(1, collection.size());
-        assertSame(res.getId(), collection.get(0).getObjetCollection().getId());
-        assertSame(1L, collection.get(0).getUtilisateur().getId());
-        assertSame(2L, collection.get(0).getQuantite());
-        assertTrue(utilisateur.isPresent());
-        assertSame(99L, utilisateur.get().getMonnaie());
     }
 }

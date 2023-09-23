@@ -1,5 +1,8 @@
 package com.mmonge.game.gacha.web.controller;
 
+import com.mmonge.game.gacha.model.entity.UtilisateurEntity;
+import com.mmonge.game.gacha.services.repository.UtilisateurCollectionRepository;
+import com.mmonge.game.gacha.services.repository.UtilisateurRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -12,7 +15,10 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,6 +35,10 @@ public class ObjetCollectionControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private UtilisateurRepository utilisateurRepository;
+    @Autowired
+    private UtilisateurCollectionRepository utilisateurCollectionRepository;
 
     @Test
     public void test_getAllObjetCollection_ok() throws Exception {
@@ -64,6 +74,25 @@ public class ObjetCollectionControllerTest {
     @Test
     public void test_obtenirUnObjet() throws Exception {
         mockMvc.perform(get("/objetCollection/obtenir/user/1/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").exists());
+
+        // on vérifie que l'utilisateur a bien un objet de plus dans sa collection, et qu'il a perdu 1 de monnaie
+        mockMvc.perform(get("/objetCollection/all/user/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)));
+
+        Optional<UtilisateurEntity> utilisateur = utilisateurRepository.findById(1L);
+        assertSame(99L, utilisateur.map(UtilisateurEntity::getMonnaie).orElse(null));
+    }
+
+    @Test
+    public void test_getOneObjetCollectionAleatoire() throws Exception {
+        mockMvc.perform(get("/objetCollection/random")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

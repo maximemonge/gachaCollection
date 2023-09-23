@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/user")
 @AllArgsConstructor
 public class UtilisateurController extends ControllerConfig {
-    private UtilisateurService utilisateurService;
+    private final UtilisateurService utilisateurService;
 
     @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)

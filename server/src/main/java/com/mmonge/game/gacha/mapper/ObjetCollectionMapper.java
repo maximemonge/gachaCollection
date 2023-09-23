@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ObjetCollectionMapper {
 
-    private ImageMapper imageMapper;
+    private final ImageMapper imageMapper;
 
     public List<ObjetCollectionDTO> objetCollectionEntityToDtos(List<ObjetCollectionEntity> entities) {
         List<ObjetCollectionDTO> dtos = new ArrayList<>();

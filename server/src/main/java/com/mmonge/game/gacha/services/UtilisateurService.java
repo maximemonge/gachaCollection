@@ -58,4 +58,8 @@ public class UtilisateurService {
             return utilisateurMapper.utilisateurEntityToDto(utilisateurRepository.save(utilisateur));
         }
     }
+
+    public void retirerMonnaie(Long utilisateurId, Long cout) {
+        utilisateurRepository.retirerMonnaie(utilisateurId, cout);
+    }
 }

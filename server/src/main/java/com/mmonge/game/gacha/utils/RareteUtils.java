@@ -12,7 +12,7 @@ public class RareteUtils {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(RareteUtils.class);
 
-    private AleatoireUtils aleatoireUtils;
+    private final AleatoireUtils aleatoireUtils;
 
     public RareteEnum getRareteAleatoire() {
         RareteEnum rarete = null;

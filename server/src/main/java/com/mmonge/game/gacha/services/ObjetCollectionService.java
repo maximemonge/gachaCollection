@@ -4,7 +4,6 @@ import com.mmonge.game.gacha.mapper.ObjetCollectionMapper;
 import com.mmonge.game.gacha.model.dto.ObjetCollectionDTO;
 import com.mmonge.game.gacha.model.entity.ObjetCollectionEntity;
 import com.mmonge.game.gacha.services.repository.ObjetCollectionRepository;
-import com.mmonge.game.gacha.services.repository.UtilisateurCollectionRepository;
 import com.mmonge.game.gacha.utils.RareteUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,6 @@ import java.util.List;
 public class ObjetCollectionService {
 
     private final ObjetCollectionRepository objetCollectionRepository;
-    private final UtilisateurCollectionRepository utilisateurCollectionRepository;
     private final ObjetCollectionMapper objetCollectionMapper;
     private final RareteUtils rareteUtils;
 
@@ -34,13 +32,11 @@ public class ObjetCollectionService {
      *
      * @return objet de collection aléatoire
      */
-    public ObjetCollectionDTO obtenirUnObjet(Long utilisateurId, Long cout) {
+    public ObjetCollectionDTO obtenirUnObjet() {
         ObjetCollectionEntity objet = null;
         while (objet == null) {
             objet = objetCollectionRepository.getAleatoireByRarete(rareteUtils.getRareteAleatoire().getCode());
         }
-        utilisateurCollectionRepository.ajouterObjetDansLaCollection(utilisateurId, objet.getId());
-        utilisateurCollectionRepository.retirerMonnaie(utilisateurId, cout);
         return objetCollectionMapper.objetCollectionEntityToDto(objet);
     }
 }

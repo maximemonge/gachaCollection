@@ -4,6 +4,7 @@ import com.mmonge.game.gacha.model.dto.ObjetCollectionDTO;
 import com.mmonge.game.gacha.model.dto.UtilisateurCollectionDTO;
 import com.mmonge.game.gacha.services.ObjetCollectionService;
 import com.mmonge.game.gacha.services.UtilisateurCollectionService;
+import com.mmonge.game.gacha.services.UtilisateurService;
 import com.mmonge.game.gacha.web.controller.cors.ControllerConfig;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,9 @@ import java.util.stream.Collectors;
 @RequestMapping(path = "/objetCollection")
 @AllArgsConstructor
 public class ObjetCollectionController extends ControllerConfig {
-    private ObjetCollectionService objetCollectionService;
-    private UtilisateurCollectionService utilisateurCollectionService;
+    private final ObjetCollectionService objetCollectionService;
+    private final UtilisateurCollectionService utilisateurCollectionService;
+    private final UtilisateurService utilisateurService;
 
     @GetMapping(path = "/all")
     public @ResponseBody ResponseEntity<Map<String, List<ObjetCollectionDTO>>> getAllObjetCollection() {
@@ -36,6 +38,14 @@ public class ObjetCollectionController extends ControllerConfig {
 
     @GetMapping(path = "/obtenir/user/{utilisateurId}/{cout}")
     public @ResponseBody ResponseEntity<ObjetCollectionDTO> obtenirUnObjet(@PathVariable Long utilisateurId, @PathVariable Long cout) {
-        return ResponseEntity.ok(objetCollectionService.obtenirUnObjet(utilisateurId, cout));
+        ObjetCollectionDTO objetAleatoire = objetCollectionService.obtenirUnObjet();
+        utilisateurCollectionService.ajouterObjetDansLaCollection(utilisateurId, objetAleatoire.getId());
+        utilisateurService.retirerMonnaie(utilisateurId, cout);
+        return ResponseEntity.ok(objetAleatoire);
+    }
+
+    @GetMapping(path = "/random")
+    public @ResponseBody ResponseEntity<ObjetCollectionDTO> getOneObjetCollectionAleatoire() {
+        return ResponseEntity.ok(objetCollectionService.obtenirUnObjet());
     }
 }

@@ -40,4 +40,10 @@ public class RareteEnumTest {
         List<ILoggingEvent> logs = listAppender.list;
         assertSame(2, listAppender.list.size());
     }
+
+    @Test
+    public void test_compare() {
+        assertSame(-1, RareteEnum.S.compare(RareteEnum.S, RareteEnum.R));
+        assertSame(1, RareteEnum.S.compare(RareteEnum.S, RareteEnum.C));
+    }
 }

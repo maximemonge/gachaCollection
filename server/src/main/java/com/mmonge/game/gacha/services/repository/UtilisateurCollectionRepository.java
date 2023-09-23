@@ -22,9 +22,4 @@ public interface UtilisateurCollectionRepository extends JpaRepository<Utilisate
     @Transactional
     @Query(value = "INSERT INTO UTILISATEUR_COLLECTION (uco_usr_id, uco_oac_id) values (:utilisateur, :objet) ON DUPLICATE KEY UPDATE uco_quantite = uco_quantite + 1", nativeQuery = true)
     void ajouterObjetDansLaCollection(@Param("utilisateur") Long utilisateur, @Param("objet") Long objet);
-
-    @Modifying
-    @Transactional
-    @Query("UPDATE UtilisateurEntity usr SET usr.monnaie = usr.monnaie - :cout where usr.id = :utilisateur")
-    void retirerMonnaie(@Param("utilisateur") Long utilisateurId, @Param("cout") Long cout);
 }

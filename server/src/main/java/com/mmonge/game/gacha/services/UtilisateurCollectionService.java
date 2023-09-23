@@ -14,7 +14,7 @@ import java.util.List;
 public class UtilisateurCollectionService {
 
     private final UtilisateurCollectionRepository utilisateurCollectionRepository;
-    private UtilisateurCollectionMapper utilisateurCollectionMapper;
+    private final UtilisateurCollectionMapper utilisateurCollectionMapper;
 
     /**
      * Récupère tous les objets de collection d'un utilisateur
@@ -25,5 +25,9 @@ public class UtilisateurCollectionService {
     public List<UtilisateurCollectionDTO> findAllIdsByUtilisateurId(Long utilisateurId) {
         List<UtilisateurCollectionEntity> objets = utilisateurCollectionRepository.findAllByUtilisateurId(utilisateurId);
         return utilisateurCollectionMapper.utilisateurCollectionEntityToDtos(objets);
+    }
+
+    public void ajouterObjetDansLaCollection(Long utilisateurId, Long objetCollectionId) {
+        utilisateurCollectionRepository.ajouterObjetDansLaCollection(utilisateurId, objetCollectionId);
     }
 }

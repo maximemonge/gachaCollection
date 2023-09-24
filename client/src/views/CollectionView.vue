@@ -1,5 +1,5 @@
 <script lang="ts">
-import { PropType, defineComponent } from "vue";
+import { defineComponent } from "vue";
 import axios from "axios";
 import ObjetCollectionComponent from "../components/ObjetCollectionComponent.vue";
 import {

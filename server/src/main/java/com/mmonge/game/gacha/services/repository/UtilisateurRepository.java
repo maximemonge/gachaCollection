@@ -12,13 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 public interface UtilisateurRepository extends JpaRepository<UtilisateurEntity, Long> {
 
     @Query("SELECT u FROM UtilisateurEntity u WHERE u.identifiant = :identifiant")
-    public UtilisateurEntity getByIdentifiant(@Param("identifiant") String identifiant);
+    UtilisateurEntity getByIdentifiant(@Param("identifiant") String identifiant);
 
     @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM UtilisateurEntity u WHERE u.identifiant = :identifiant")
-    public boolean isIdentifiantUtilise(@Param("identifiant") String identifiant);
+    boolean isIdentifiantUtilise(@Param("identifiant") String identifiant);
 
     @Modifying
     @Transactional
-    @Query("UPDATE UtilisateurEntity usr SET usr.monnaie = usr.monnaie - :cout where usr.id = :utilisateur")
-    void retirerMonnaie(@Param("utilisateur") Long utilisateurId, @Param("cout") Long cout);
+    @Query("UPDATE UtilisateurEntity usr SET usr.monnaie = usr.monnaie + :monnaie where usr.id = :utilisateur")
+    void ajouterMonnaie(@Param("utilisateur") Long utilisateurId, @Param("monnaie") Long monnaie);
 }

@@ -29,6 +29,9 @@ export const jp = {
         obtenirobjet: 'アイテムを獲得する',
         objetobtenu: '獲得したアイテム'
     },
+    accueil: {
+        jouer: '遊ぶ'
+    },
     404: {
         erreur: 'ああ、このページは存在しない、とても悲しい :\'('
     }

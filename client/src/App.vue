@@ -82,6 +82,10 @@ export default defineComponent({
     changerTheme(nouveauTheme: ThemeEnum) {
       this.theme = nouveauTheme;
     },
+
+    actualiserDonneeUtilisateur() {
+      this.utilisateur = getUtilisateurFromCache();
+    },
   },
 });
 </script>
@@ -156,7 +160,11 @@ export default defineComponent({
       </nav>
     </div>
     <div class="app-body-contenu">
-      <router-view :key="$route.path" @perte-monnaie="perteMonnaie" />
+      <router-view
+        :key="$route.path"
+        @perte-monnaie="perteMonnaie"
+        @actualiser-utilisateur="actualiserDonneeUtilisateur"
+      />
     </div>
   </div>
   <ConnexionView

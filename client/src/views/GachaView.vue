@@ -3,10 +3,7 @@ import { defineComponent } from "vue";
 import axios from "axios";
 import { ObjetCollection, Utilisateur } from "@/model/models";
 import ObjetCollectionComponent from "@/components/ObjetCollectionComponent.vue";
-import {
-  getUtilisateurFromCache,
-  getUtilisateurFromRoute,
-} from "@/utils/utilisateurUtils";
+import { getUtilisateurFromCache } from "@/utils/utilisateurUtils";
 import { useI18n } from "vue-i18n";
 
 export default defineComponent({

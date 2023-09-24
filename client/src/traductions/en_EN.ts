@@ -29,6 +29,9 @@ export const en = {
         obtenirobjet: 'Get an item',
         objetobtenu: 'Item obtained'
     },
+    accueil: {
+        jouer: 'Play'
+    },
     404: {
         erreur: 'Oh no this page doesn\'t exist, it\'s so sad :\'('
     }

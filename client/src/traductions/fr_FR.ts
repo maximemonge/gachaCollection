@@ -29,6 +29,9 @@ export const fr = {
         obtenirobjet: 'Obtenir un objet',
         objetobtenu: 'Objet obtenu'
     },
+    accueil: {
+        jouer: 'Jouer'
+    },
     404: {
         erreur: 'Oh non cette page n\'existe pas, c\'est beaucoup trop triste :\'('
     }

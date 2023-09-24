@@ -38,4 +38,10 @@ public class UtilisateurController extends ControllerConfig {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
+    @PostMapping(path = "/monnaie", consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ResponseEntity<UtilisateurDTO> gagnerMonnaie(@RequestBody UtilisateurDTO utilisateur) {
+        return ResponseEntity.ok(utilisateurService.ajouterMonnaie(utilisateur.getId(), utilisateur.getMonnaie()));
+    }
 }

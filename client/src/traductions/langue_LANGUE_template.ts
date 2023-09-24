@@ -29,6 +29,9 @@ export const CODE_PAYS = {
         obtenirobjet: '',
         objetobtenu: ''
     },
+    accueil: {
+        jouer: ''
+    },
     404: {
         erreur: ''
     }

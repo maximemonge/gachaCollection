@@ -59,7 +59,12 @@ public class UtilisateurService {
         }
     }
 
-    public void retirerMonnaie(Long utilisateurId, Long cout) {
-        utilisateurRepository.retirerMonnaie(utilisateurId, cout);
+    public void retirerMonnaie(Long utilisateurId, Long monnaie) {
+        utilisateurRepository.ajouterMonnaie(utilisateurId, -monnaie);
+    }
+
+    public UtilisateurDTO ajouterMonnaie(Long utilisateurId, Long monnaie) {
+        utilisateurRepository.ajouterMonnaie(utilisateurId, monnaie);
+        return utilisateurMapper.utilisateurEntityToDto(utilisateurRepository.findById(utilisateurId).orElse(null));
     }
 }

@@ -17,6 +17,14 @@ export interface UtilisateurCollection {
     quantite: number,
 }
 
+export interface PiecePuzzle {
+    posX: string,
+    posY: string,
+    ordre: number,
+    vide: boolean,
+    index: number,
+}
+
 export enum NotificationEnum {
     OK = "OK",
     WARNING = "WARNING",

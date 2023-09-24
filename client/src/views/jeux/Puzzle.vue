@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { PropType, defineComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import axios from "axios";
 import { ObjetCollection, PiecePuzzle } from "@/model/models";
@@ -20,6 +20,9 @@ export default defineComponent({
       trad: useI18n().t,
     };
   },
+  props: {
+    dimension: Number as PropType<Number>,
+  },
   mounted() {
     this.initPiecesPuzzle();
     this.getObjetAleatoire();
@@ -38,6 +41,10 @@ export default defineComponent({
         });
     },
 
+    getDimension(): number {
+      return this.dimension?.valueOf() || 0;
+    },
+
     getImageSrc() {
       return "data:image/png;base64," + this.objetCollection?.image?.image;
     },
@@ -47,44 +54,37 @@ export default defineComponent({
     },
 
     initPiecesPuzzle() {
-      this.piecesPuzzle.push(
-        this.creerPiecePuzzle("0px", "0px", Math.random(), 0)
-      );
-      this.piecesPuzzle.push(
-        this.creerPiecePuzzle("80.66px", "0px", Math.random(), 1)
-      );
-      this.piecesPuzzle.push(
-        this.creerPiecePuzzle("40.33px", "0px", Math.random(), 2)
-      );
-      this.piecesPuzzle.push(
-        this.creerPiecePuzzle("0px", "89.33px", Math.random(), 3)
-      );
-      this.piecesPuzzle.push(
-        this.creerPiecePuzzle("80.66px", "89.33px", Math.random(), 4)
-      );
-      this.piecesPuzzle.push(
-        this.creerPiecePuzzle("40.33px", "89.33px", Math.random(), 5)
-      );
-      this.piecesPuzzle.push(
-        this.creerPiecePuzzle("0px", "44.66px", Math.random(), 6)
-      );
-      this.piecesPuzzle.push(
-        this.creerPiecePuzzle("80.66px", "44.66px", Math.random(), 7)
-      );
-      this.piecesPuzzle.push(
-        this.creerPiecePuzzle("40.33px", "44.66px", Math.random(), 8)
-      );
+      let compteur = 0;
+      for (let y = 0; y < this.getDimension(); y++) {
+        for (let x = 0; x < this.getDimension(); x++) {
+          this.piecesPuzzle.push(
+            this.creerPiecePuzzle(
+              -x * (121 / this.getDimension()),
+              -y * (134 / this.getDimension()),
+              Math.random(),
+              compteur
+            )
+          );
+          compteur++;
+        }
+      }
       this.piecesPuzzle.sort((a, b) => (a.ordre < b.ordre ? -1 : 1));
       this.piecesPuzzle[0].vide = true;
     },
 
     creerPiecePuzzle(
-      posX: string,
-      posY: string,
+      x: number,
+      y: number,
       ordre: number,
       index: number
     ): PiecePuzzle {
+      const posX = x + "px";
+      const posY = y + "px";
       return { posX, posY, ordre, vide: false, index };
+    },
+
+    getTaillePiece() {
+      return 100 / this.getDimension() + "%";
     },
 
     getBackgroundPosition(piece: PiecePuzzle) {
@@ -105,10 +105,11 @@ export default defineComponent({
 
     isDeplacementAutorise(index: number) {
       const indexPositionVide = this.getPositionPieceVide();
-      return index + 3 == indexPositionVide ||
-        index - 3 == indexPositionVide ||
-        index + 1 == indexPositionVide ||
-        index - 1 == indexPositionVide
+      return index + this.getDimension() == indexPositionVide ||
+        index - this.getDimension() == indexPositionVide ||
+        (index + 1 == indexPositionVide &&
+          index % this.getDimension() != this.getDimension() - 1) ||
+        (index - 1 == indexPositionVide && index % this.getDimension() != 0)
         ? "all"
         : "none";
     },
@@ -124,7 +125,7 @@ export default defineComponent({
       await axios
         .post("http://localhost:3000/user/monnaie", {
           id: getUtilisateurFromCache().id,
-          monnaie: 5,
+          monnaie: this.getDimension(),
         })
         .then((reponse) => {
           setUtilisateurDansCache(reponse.data);
@@ -143,6 +144,8 @@ export default defineComponent({
       class="puzzle-piece"
       :class="[index > 2 ? 'supprimer-marge' : '']"
       :style="{
+        width: getTaillePiece(),
+        height: getTaillePiece(),
         background: piece.vide ? 'grey' : getImageSrcUrl(),
         backgroundImage: piece.vide ? '' : getImageSrcUrl(),
         backgroundPosition: getBackgroundPosition(piece),
@@ -166,8 +169,6 @@ export default defineComponent({
   background: white !important;
 
   &-piece {
-    width: 33.33%;
-    height: 33.33%;
     cursor: pointer;
   }
 

@@ -9,12 +9,17 @@ export default defineComponent({
     Puzzle,
   },
   data() {
-    return { jouer: false, trad: useI18n().t };
+    return { dimension: 0, jouer: false, trad: useI18n().t };
   },
   methods: {
     arreterJeu() {
       this.jouer = false;
       this.$emit("actualiserUtilisateur");
+    },
+
+    lancerPartie(dimension: number) {
+      this.dimension = dimension;
+      this.jouer = true;
     },
   },
 });
@@ -23,10 +28,15 @@ export default defineComponent({
 <template>
   <main class="accueil">
     <div class="accueil-jeu">
-      <button class="accueil-jeu-jouer" v-if="!jouer" @click="jouer = true">
-        {{ trad("accueil.jouer") }}
-      </button>
-      <Puzzle v-else @arreter-jeu="arreterJeu()" />
+      <div class="accueil-jeu-jouer" v-if="!jouer">
+        <div class="accueil-jeu-jouer-label">{{ trad("accueil.jouer") }}</div>
+        <div class="accueil-jeu-jouer-boutons">
+          <button @click="lancerPartie(3)">3x3</button>
+          <button @click="lancerPartie(4)">4x4</button>
+          <button @click="lancerPartie(5)">5x5</button>
+        </div>
+      </div>
+      <Puzzle :dimension="dimension" v-else @arreter-jeu="arreterJeu()" />
     </div>
   </main>
 </template>
@@ -48,7 +58,26 @@ export default defineComponent({
       height: 100%;
       border: none;
       background: none;
-      cursor: pointer;
+
+      &-label {
+        margin-top: 5px;
+        position: relative;
+        text-align: center;
+      }
+
+      &-boutons {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        vertical-align: middle;
+        margin-top: 5%;
+        text-align: center;
+
+        button {
+          margin: 5px 0px 5px 0px;
+          width: 70px;
+        }
+      }
     }
   }
 }

@@ -2,20 +2,20 @@
 import { PropType, defineComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import axios from "axios";
-import { ObjetCollection, PiecePuzzle } from "@/model/models";
+import { ObjetCollection, PieceTaquin } from "@/model/models";
 import {
   getUtilisateurFromCache,
   setUtilisateurDansCache,
 } from "@/utils/utilisateurUtils";
 
 export default defineComponent({
-  name: "Puzzle",
+  name: "Taquin",
   data() {
     let objetCollection: ObjetCollection = undefined!;
-    const piecesPuzzle: PiecePuzzle[] = [];
+    const piecesTaquin: PieceTaquin[] = [];
     return {
       objetCollection,
-      piecesPuzzle,
+      piecesTaquin,
       victoire: false,
       trad: useI18n().t,
     };
@@ -24,7 +24,7 @@ export default defineComponent({
     dimension: Number as PropType<Number>,
   },
   mounted() {
-    this.initPiecesPuzzle();
+    this.initPiecesTaquin();
     this.getObjetAleatoire();
   },
   methods: {
@@ -53,12 +53,12 @@ export default defineComponent({
       return "url(" + this.getImageSrc() + ")";
     },
 
-    initPiecesPuzzle() {
+    initPiecesTaquin() {
       let compteur = 0;
       for (let y = 0; y < this.getDimension(); y++) {
         for (let x = 0; x < this.getDimension(); x++) {
-          this.piecesPuzzle.push(
-            this.creerPiecePuzzle(
+          this.piecesTaquin.push(
+            this.creerPieceTaquin(
               -x * (121 / this.getDimension()),
               -y * (134 / this.getDimension()),
               Math.random(),
@@ -68,16 +68,40 @@ export default defineComponent({
           compteur++;
         }
       }
-      this.piecesPuzzle.sort((a, b) => (a.ordre < b.ordre ? -1 : 1));
-      this.piecesPuzzle[0].vide = true;
+      this.piecesTaquin[0].vide = true;
+      this.melangerPiecesTaquin();
     },
 
-    creerPiecePuzzle(
+    melangerPiecesTaquin() {
+      let melange = false;
+      while (!melange || !this.isNiveauMelangePair()) {
+        this.piecesTaquin.forEach((p) => (p.ordre = Math.random()));
+        this.piecesTaquin.sort((a, b) => (a.ordre < b.ordre ? -1 : 1));
+        melange = true;
+      }
+    },
+
+    isNiveauMelangePair() {
+      let compteurPieceOrdonnee = 0;
+      const pieceIndex = this.piecesTaquin.map((p) => p.index);
+      const nombreTotalPiece = this.getDimension() * this.getDimension();
+      for (let i = 0; i < nombreTotalPiece; i++) {
+        if (
+          i + 1 < nombreTotalPiece &&
+          pieceIndex.indexOf(i) < pieceIndex.indexOf(i + 1)
+        ) {
+          compteurPieceOrdonnee++;
+        }
+      }
+      return compteurPieceOrdonnee % 2 == 0;
+    },
+
+    creerPieceTaquin(
       x: number,
       y: number,
       ordre: number,
       index: number
-    ): PiecePuzzle {
+    ): PieceTaquin {
       const posX = x + "px";
       const posY = y + "px";
       return { posX, posY, ordre, vide: false, index };
@@ -87,18 +111,18 @@ export default defineComponent({
       return 100 / this.getDimension() + "%";
     },
 
-    getBackgroundPosition(piece: PiecePuzzle) {
+    getBackgroundPosition(piece: PieceTaquin) {
       return piece.posX + " " + piece.posY;
     },
 
     getPositionPieceVide() {
-      return this.piecesPuzzle.map((piece) => piece.vide).indexOf(true);
+      return this.piecesTaquin.map((piece) => piece.vide).indexOf(true);
     },
 
-    deplacerPiece(piece: PiecePuzzle, index: number) {
+    deplacerPiece(piece: PieceTaquin, index: number) {
       const indexPositionVide = this.getPositionPieceVide();
-      this.piecesPuzzle[index] = this.piecesPuzzle[indexPositionVide];
-      this.piecesPuzzle[indexPositionVide] = piece;
+      this.piecesTaquin[index] = this.piecesTaquin[indexPositionVide];
+      this.piecesTaquin[indexPositionVide] = piece;
 
       this.victoire = this.verifierVictoire();
     },
@@ -116,7 +140,7 @@ export default defineComponent({
 
     verifierVictoire() {
       return (
-        this.piecesPuzzle.find((p) => p != this.piecesPuzzle[p.index]) ===
+        this.piecesTaquin.find((p) => p != this.piecesTaquin[p.index]) ===
         undefined
       );
     },
@@ -137,11 +161,11 @@ export default defineComponent({
 </script>
 
 <template>
-  <main v-if="objetCollection && piecesPuzzle" class="puzzle">
+  <main v-if="objetCollection && piecesTaquin" class="taquin">
     <canvas
       v-if="!victoire"
-      v-for="(piece, index) of piecesPuzzle"
-      class="puzzle-piece"
+      v-for="(piece, index) of piecesTaquin"
+      class="taquin-piece"
       :class="[index > 2 ? 'supprimer-marge' : '']"
       :style="{
         width: getTaillePiece(),
@@ -153,7 +177,7 @@ export default defineComponent({
       }"
       @click="deplacerPiece(piece, index)"
     ></canvas>
-    <div class="puzzle-termine" v-else>
+    <div class="taquin-termine" v-else>
       <button @click="gagnerArgent()">Obtenir de l'argent</button>
       <img :src="getImageSrc()" />
     </div>
@@ -161,7 +185,7 @@ export default defineComponent({
 </template>
 
 <style lang="less">
-.puzzle {
+.taquin {
   text-align: justify;
   flex-wrap: wrap;
   width: 100%;

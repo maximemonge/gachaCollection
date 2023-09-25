@@ -17,7 +17,7 @@ export interface UtilisateurCollection {
     quantite: number,
 }
 
-export interface PiecePuzzle {
+export interface PieceTaquin {
     posX: string,
     posY: string,
     ordre: number,

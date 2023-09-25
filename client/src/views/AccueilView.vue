@@ -1,12 +1,12 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useI18n } from "vue-i18n";
-import Puzzle from "./jeux/Puzzle.vue";
+import Taquin from "./jeux/Taquin.vue";
 
 export default defineComponent({
   name: "AccueilView",
   components: {
-    Puzzle,
+    Taquin,
   },
   data() {
     return { dimension: 0, jouer: false, trad: useI18n().t };
@@ -36,7 +36,7 @@ export default defineComponent({
           <button @click="lancerPartie(5)">5x5</button>
         </div>
       </div>
-      <Puzzle :dimension="dimension" v-else @arreter-jeu="arreterJeu()" />
+      <Taquin :dimension="dimension" v-else @arreter-jeu="arreterJeu()" />
     </div>
   </main>
 </template>

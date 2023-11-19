@@ -30,3 +30,13 @@ export enum NotificationEnum {
     WARNING = "WARNING",
     ERREUR = "ERREUR"
 }
+
+export enum DedaleColoreTerrain {
+    JAUNE = "JAUNE",
+    ROUGE = "ROUGE",
+    VERT = "VERT",
+    BLEU = "BLEU",
+    TRESOR = "TRESOR",
+    CHECKPOINT = "CHECKPOINT",
+    VIDE = "VIDE"
+}

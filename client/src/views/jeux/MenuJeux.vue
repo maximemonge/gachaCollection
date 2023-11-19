@@ -2,11 +2,13 @@
 import { defineComponent } from "vue";
 import { useI18n } from "vue-i18n";
 import Taquin from "./Taquin.vue";
+import DedaleColore from "./DedaleColore.vue";
 
 export default defineComponent({
   name: "MenuJeux",
   components: {
     Taquin,
+    DedaleColore,
   },
   data() {
     return { jeu: "", difficulte: 0, jouer: false, trad: useI18n().t };
@@ -21,6 +23,12 @@ export default defineComponent({
       this.difficulte = difficulte;
       this.jouer = true;
     },
+
+    choisirJeu(jeuChoisi: string) {
+      this.jouer = false;
+      this.difficulte = 0;
+      this.jeu = jeuChoisi;
+    },
   },
 });
 </script>
@@ -28,13 +36,16 @@ export default defineComponent({
 <template>
   <main class="menu-jeux">
     <div class="menu-jeux-liste">
-      <div class="menu-jeux-liste-jeu" @click="jeu = 'Taquin'">
+      <div class="menu-jeux-liste-jeu" @click="choisirJeu('Taquin')">
         <img class="menu-jeux-liste-jeu-image" src="../../assets/taquin.png" />
         <span>Taquin</span>
       </div>
-      <div class="menu-jeux-liste-jeu" @click="jeu = 'BatailleNavale'">
-        <img class="menu-jeux-liste-jeu-image" src="../../assets/taquin.png" />
-        <span>WIP</span>
+      <div class="menu-jeux-liste-jeu" @click="choisirJeu('DedaleColore')">
+        <img
+          class="menu-jeux-liste-jeu-image"
+          src="../../assets/dedaleColore.png"
+        />
+        <span>Dédale coloré</span>
       </div>
     </div>
 
@@ -50,6 +61,14 @@ export default defineComponent({
         </div>
       </div>
       <Taquin :dimension="difficulte" v-else @arreter-jeu="arreterJeu()" />
+    </div>
+    <div class="menu-jeux-dedaleColore" v-if="jeu === 'DedaleColore'">
+      <div class="menu-jeux-dedaleColore-jouer" v-if="!jouer">
+        <div class="menu-jeux-dedaleColore-jouer-boutons">
+          <button @click="lancerPartie(0)">{{ trad("accueil.jouer") }}</button>
+        </div>
+      </div>
+      <DedaleColore v-else @arreter-jeu="arreterJeu()" />
     </div>
   </main>
 </template>
@@ -82,6 +101,38 @@ export default defineComponent({
     margin: auto;
     width: 121px;
     height: 134px;
+    border: 1px solid;
+
+    &-jouer {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: none;
+
+      &-label {
+        text-align: center;
+      }
+
+      &-boutons {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        vertical-align: middle;
+        margin-top: 5%;
+        text-align: center;
+
+        button {
+          margin: 5px 0px 5px 0px;
+          width: 70px;
+        }
+      }
+    }
+  }
+
+  &-dedaleColore {
+    margin: auto;
+    width: 165px;
+    height: 165px;
     border: 1px solid;
 
     &-jouer {

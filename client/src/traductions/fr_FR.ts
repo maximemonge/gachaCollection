@@ -30,7 +30,11 @@ export const fr = {
         objetobtenu: 'Objet obtenu'
     },
     accueil: {
-        jouer: 'Jouer'
+        jouer: 'Jouer',
+        jeux: {
+            taquin: 'Taquin',
+            dedaleColore: 'Dédale coloré'
+        }
     },
     404: {
         erreur: 'Oh non cette page n\'existe pas, c\'est beaucoup trop triste :\'('

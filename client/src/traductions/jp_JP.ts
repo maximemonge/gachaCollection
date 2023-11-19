@@ -30,7 +30,11 @@ export const jp = {
         objetobtenu: '獲得したアイテム'
     },
     accueil: {
-        jouer: '遊ぶ'
+        jouer: '遊ぶ',
+        jeux: {
+            taquin: '15パズル',
+            dedaleColore: 'カラフルな迷路'
+        }
     },
     404: {
         erreur: 'ああ、このページは存在しない、とても悲しい :\'('

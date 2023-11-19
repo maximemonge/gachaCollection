@@ -30,7 +30,11 @@ export const CODE_PAYS = {
         objetobtenu: ''
     },
     accueil: {
-        jouer: ''
+        jouer: '',
+        jeux: {
+            taquin: '',
+            dedaleColore: ''
+        }
     },
     404: {
         erreur: ''

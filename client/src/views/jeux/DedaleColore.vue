@@ -193,7 +193,7 @@ export default defineComponent({
           couleurCase = "blue";
           break;
         case DedaleColoreTerrain.TRESOR:
-          couleurCase = "purple";
+          couleurCase = "white";
           break;
         case DedaleColoreTerrain.VIDE:
           couleurCase = "black";
@@ -380,10 +380,15 @@ export default defineComponent({
     <div class="ligne" v-for="(ligne, y) in terrain" v-if="tresors > 0">
       <template v-for="(couleur, x) in ligne">
         <div class="case" :style="{ background: couleurBackground(couleur) }">
-          <img
-            class="personnage"
-            src="../../assets/argent.png"
+          <font-awesome-icon
+            class="icone"
+            icon="fa-solid fa-dog"
             v-if="isPositionJoueur(x, y)"
+          />
+          <font-awesome-icon
+            class="icone"
+            icon="fa-solid fa-gem"
+            v-if="couleur === 'TRESOR'"
           />
         </div>
       </template>
@@ -406,11 +411,11 @@ export default defineComponent({
       width: 15px;
       height: 15px;
 
-      .personnage {
-        width: 10px;
-        height: 10px;
+      .icone {
+        width: 13px;
+        height: 13px;
         font-weight: bold;
-        margin: 2px;
+        margin: 0px 0px 2px 0.5px;
       }
     }
   }

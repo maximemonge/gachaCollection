@@ -38,14 +38,14 @@ export default defineComponent({
     <div class="menu-jeux-liste">
       <div class="menu-jeux-liste-jeu" @click="choisirJeu('Taquin')">
         <img class="menu-jeux-liste-jeu-image" src="../../assets/taquin.png" />
-        <span>Taquin</span>
+        <span>{{ trad("accueil.jeux.taquin") }}</span>
       </div>
       <div class="menu-jeux-liste-jeu" @click="choisirJeu('DedaleColore')">
         <img
           class="menu-jeux-liste-jeu-image"
           src="../../assets/dedaleColore.png"
         />
-        <span>Dédale coloré</span>
+        <span>{{ trad("accueil.jeux.dedaleColore") }}</span>
       </div>
     </div>
 
@@ -87,12 +87,15 @@ export default defineComponent({
 
     &-jeu {
       cursor: pointer;
-      width: 100px;
-      height: 100px;
+      width: 120px;
+      height: 120px;
+      display: flex;
+      flex-direction: column;
 
       img {
         width: 60px;
         height: 66px;
+        align-self: center;
       }
     }
   }

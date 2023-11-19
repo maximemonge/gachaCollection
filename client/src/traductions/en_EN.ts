@@ -30,7 +30,11 @@ export const en = {
         objetobtenu: 'Item obtained'
     },
     accueil: {
-        jouer: 'Play'
+        jouer: 'Play',
+        jeux: {
+            taquin: '15 Puzzle',
+            dedaleColore: 'Colorful maze'
+        }
     },
     404: {
         erreur: 'Oh no this page doesn\'t exist, it\'s so sad :\'('

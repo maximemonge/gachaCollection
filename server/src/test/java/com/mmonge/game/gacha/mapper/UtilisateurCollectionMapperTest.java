@@ -22,7 +22,7 @@ public class UtilisateurCollectionMapperTest {
     private UtilisateurCollectionMapper utilisateurCollectionMapper;
 
     @BeforeEach
-    public void beforeAll() {
+    public void beforeEach() {
         utilisateurCollectionMapper = new UtilisateurCollectionMapper();
     }
 
@@ -33,15 +33,18 @@ public class UtilisateurCollectionMapperTest {
 
     @Test
     public void test_utilisateurCollectionEntityToDtos_ok() {
+        // Given
         List<UtilisateurCollectionEntity> entities = Arrays.asList(creerUtilisateurCollection(1L, 2L), creerUtilisateurCollection(3L, 4L));
 
+        // When
         List<UtilisateurCollectionDTO> res = utilisateurCollectionMapper.utilisateurCollectionEntityToDtos(entities);
-        res.sort(Comparator.comparing(UtilisateurCollectionDTO::getObjetCollectionId));
+        res.sort(Comparator.comparing(UtilisateurCollectionDTO::objetCollectionId));
 
-        assertSame(1L, res.get(0).getObjetCollectionId());
-        assertSame(2L, res.get(0).getQuantite());
-        assertSame(3L, res.get(1).getObjetCollectionId());
-        assertSame(4L, res.get(1).getQuantite());
+        // Then
+        assertSame(1L, res.get(0).objetCollectionId());
+        assertSame(2L, res.get(0).quantite());
+        assertSame(3L, res.get(1).objetCollectionId());
+        assertSame(4L, res.get(1).quantite());
     }
 
     private UtilisateurCollectionEntity creerUtilisateurCollection(Long objetId, Long quantite) {

@@ -29,14 +29,15 @@ public class RareteEnumTest {
 
     @Test
     public void test_get_ko() {
+        // Given
         Logger logger = (Logger) LoggerFactory.getLogger(RareteEnum.class);
         ListAppender<ILoggingEvent> listAppender = new ListAppender<>();
         listAppender.start();
         logger.addAppender(listAppender);
 
+        // When Then
         assertNull(RareteEnum.get("coucou"));
         assertNull(RareteEnum.get(null));
-
         List<ILoggingEvent> logs = listAppender.list;
         assertSame(2, listAppender.list.size());
     }

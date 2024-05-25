@@ -1,18 +1,20 @@
 package com.mmonge.game.gacha.utils;
 
 import com.mmonge.game.gacha.model.enums.RareteEnum;
-import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
 public class RareteUtils {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(RareteUtils.class);
 
     private final AleatoireUtils aleatoireUtils;
+
+    public RareteUtils(AleatoireUtils aleatoireUtils) {
+        this.aleatoireUtils = aleatoireUtils;
+    }
 
     public RareteEnum getRareteAleatoire() {
         RareteEnum rarete = null;

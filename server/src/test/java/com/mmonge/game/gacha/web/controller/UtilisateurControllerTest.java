@@ -1,6 +1,7 @@
 package com.mmonge.game.gacha.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mmonge.game.gacha.model.dto.UtilisateurDTO;
 import com.mmonge.game.gacha.model.pojo.UtilisateurPojo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class UtilisateurControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.id").value(100L))
                 .andExpect(jsonPath("$.identifiant").value("mmonge"))
                 .andExpect(jsonPath("$.monnaie").value(100));
     }
@@ -74,10 +75,20 @@ public class UtilisateurControllerTest {
                 .andExpect(status().is(HttpStatus.INTERNAL_SERVER_ERROR.value()));
     }
 
+
+    @Test
+    public void test_gagnerMonnaie() throws Exception {
+        mockMvc.perform(post("/user/monnaie")
+                        .content(new ObjectMapper().writeValueAsString(new UtilisateurDTO(101L, "test_monnaie", 20L)))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(101L))
+                .andExpect(jsonPath("$.identifiant").value("test_monnaie"))
+                .andExpect(jsonPath("$.monnaie").value(120));
+    }
+
     private UtilisateurPojo creerLoginInfos(String id, String mdp) {
-        UtilisateurPojo loginInfos = new UtilisateurPojo();
-        loginInfos.setIdentifiant(id);
-        loginInfos.setMotDePasse(mdp);
-        return loginInfos;
+        return new UtilisateurPojo(id, mdp);
     }
 }

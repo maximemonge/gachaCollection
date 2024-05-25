@@ -16,21 +16,24 @@ public class UtilisateurMapperTest {
     private UtilisateurMapper utilisateurMapper;
 
     @BeforeEach
-    public void beforeAll() {
+    public void beforeEach() {
         utilisateurMapper = new UtilisateurMapper();
     }
 
     @Test
     public void test_utilisateurEntityToDto() {
+        // Given
         UtilisateurEntity entity = new UtilisateurEntity();
         entity.setId(1L);
         entity.setIdentifiant("toto");
         entity.setMonnaie(12L);
 
+        // When
         UtilisateurDTO dto = utilisateurMapper.utilisateurEntityToDto(entity);
 
-        assertSame(1L, dto.getId());
-        assertEquals("toto", dto.getIdentifiant());
-        assertSame(12L, dto.getMonnaie());
+        // Then
+        assertSame(1L, dto.id());
+        assertEquals("toto", dto.identifiant());
+        assertSame(12L, dto.monnaie());
     }
 }

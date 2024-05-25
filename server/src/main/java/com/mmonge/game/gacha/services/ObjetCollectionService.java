@@ -5,18 +5,22 @@ import com.mmonge.game.gacha.model.dto.ObjetCollectionDTO;
 import com.mmonge.game.gacha.model.entity.ObjetCollectionEntity;
 import com.mmonge.game.gacha.services.repository.ObjetCollectionRepository;
 import com.mmonge.game.gacha.utils.RareteUtils;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class ObjetCollectionService {
 
     private final ObjetCollectionRepository objetCollectionRepository;
     private final ObjetCollectionMapper objetCollectionMapper;
     private final RareteUtils rareteUtils;
+
+    public ObjetCollectionService(ObjetCollectionRepository objetCollectionRepository, ObjetCollectionMapper objetCollectionMapper, RareteUtils rareteUtils) {
+        this.objetCollectionRepository = objetCollectionRepository;
+        this.objetCollectionMapper = objetCollectionMapper;
+        this.rareteUtils = rareteUtils;
+    }
 
     /**
      * Récupère tous les objets de collection

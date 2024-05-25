@@ -2,15 +2,11 @@ package com.mmonge.game.gacha.model.entity;
 
 import com.mmonge.game.gacha.model.entity.composite.UtilisateurCollectionCompositeId;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 
 @Entity
 @Table(name = "UTILISATEUR_COLLECTION")
-@Getter
-@Setter
 @IdClass(UtilisateurCollectionCompositeId.class)
 public class UtilisateurCollectionEntity implements Serializable {
     @Id
@@ -25,4 +21,28 @@ public class UtilisateurCollectionEntity implements Serializable {
 
     @Column(name = "uco_quantite")
     private Long quantite;
+
+    public UtilisateurEntity getUtilisateur() {
+        return utilisateur;
+    }
+
+    public void setUtilisateur(UtilisateurEntity utilisateur) {
+        this.utilisateur = utilisateur;
+    }
+
+    public ObjetCollectionEntity getObjetCollection() {
+        return objetCollection;
+    }
+
+    public void setObjetCollection(ObjetCollectionEntity objetCollection) {
+        this.objetCollection = objetCollection;
+    }
+
+    public Long getQuantite() {
+        return quantite;
+    }
+
+    public void setQuantite(Long quantite) {
+        this.quantite = quantite;
+    }
 }

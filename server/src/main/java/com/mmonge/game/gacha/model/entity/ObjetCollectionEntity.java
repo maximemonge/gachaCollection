@@ -1,8 +1,6 @@
 package com.mmonge.game.gacha.model.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -10,8 +8,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "OBJET_A_COLLECTIONNER")
-@Getter
-@Setter
 public class ObjetCollectionEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,4 +29,52 @@ public class ObjetCollectionEntity implements Serializable {
 
     @OneToMany(mappedBy = "objetCollection")
     private Set<UtilisateurCollectionEntity> possesseurs;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getRarete() {
+        return rarete;
+    }
+
+    public void setRarete(String rarete) {
+        this.rarete = rarete;
+    }
+
+    public String getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
+    }
+
+    public ImageEntity getImage() {
+        return image;
+    }
+
+    public void setImage(ImageEntity image) {
+        this.image = image;
+    }
+
+    public Set<UtilisateurCollectionEntity> getPossesseurs() {
+        return possesseurs;
+    }
+
+    public void setPossesseurs(Set<UtilisateurCollectionEntity> possesseurs) {
+        this.possesseurs = possesseurs;
+    }
 }

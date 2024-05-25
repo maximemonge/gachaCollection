@@ -3,38 +3,32 @@ package com.mmonge.game.gacha.mapper;
 import com.mmonge.game.gacha.model.dto.ObjetCollectionDTO;
 import com.mmonge.game.gacha.model.entity.ObjetCollectionEntity;
 import com.mmonge.game.gacha.model.enums.RareteEnum;
-import lombok.AllArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 public class ObjetCollectionMapper {
 
     private final ImageMapper imageMapper;
 
+    public ObjetCollectionMapper(ImageMapper imageMapper) {
+        this.imageMapper = imageMapper;
+    }
+
     public List<ObjetCollectionDTO> objetCollectionEntityToDtos(List<ObjetCollectionEntity> entities) {
         List<ObjetCollectionDTO> dtos = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(entities)) {
-            dtos = entities.stream().filter(Objects::nonNull).map(this::objetCollectionEntityToDto).collect(Collectors.toList());
+            dtos = entities.stream().map(this::objetCollectionEntityToDto).collect(Collectors.toList());
         }
         return dtos;
     }
 
-    public ObjetCollectionDTO objetCollectionEntityToDto(ObjetCollectionEntity entity) {
-        ObjetCollectionDTO dto = new ObjetCollectionDTO();
-        if (entity != null) {
-            dto.setId(entity.getId());
-            dto.setCode(entity.getCode());
-            dto.setRarete(RareteEnum.get(entity.getRarete()));
-            dto.setImage(imageMapper.imageEntityToDto(entity.getImage()));
-            dto.setCategorie(entity.getCategorie());
-        }
-        return dto;
+    public ObjetCollectionDTO objetCollectionEntityToDto(@NonNull ObjetCollectionEntity entity) {
+        return new ObjetCollectionDTO(entity.getId(), entity.getCode(), RareteEnum.get(entity.getRarete()), imageMapper.imageEntityToDto(entity.getImage()), entity.getCategorie());
     }
 }

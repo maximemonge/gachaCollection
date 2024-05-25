@@ -31,17 +31,19 @@ public class UtilisateurServiceTest {
     private UtilisateurService utilisateurService;
 
     @BeforeEach
-    public void beforeAll() {
+    public void beforeEach() {
         utilisateurService = new UtilisateurService(utilisateurRepository, new UtilisateurMapper());
     }
 
     @Test
     public void test_login() {
+        // When
         UtilisateurDTO res = utilisateurService.login("mmonge", "mmonge");
 
-        assertNotNull(res.getId());
-        assertEquals("mmonge", res.getIdentifiant());
-        assertSame(100L, res.getMonnaie());
+        // Then
+        assertNotNull(res.id());
+        assertEquals("mmonge", res.identifiant());
+        assertSame(100L, res.monnaie());
     }
 
     @Test
@@ -78,12 +80,16 @@ public class UtilisateurServiceTest {
 
     @Test
     public void test_creerUtilisateur_identifiantPasUtilise() throws DuplicationDonneeException {
+        // Given
         String identifiant = "Toto";
         String motDePasse = "TotoMdp";
+
+        // When
         UtilisateurDTO res = utilisateurService.creerUtilisateur(identifiant, motDePasse);
 
-        assertNotNull(res.getId());
-        assertEquals(identifiant, res.getIdentifiant());
-        assertSame(10L, res.getMonnaie());
+        // Then
+        assertNotNull(res.id());
+        assertEquals(identifiant, res.identifiant());
+        assertSame(10L, res.monnaie());
     }
 }

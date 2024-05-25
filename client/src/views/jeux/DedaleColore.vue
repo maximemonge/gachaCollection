@@ -412,6 +412,7 @@ export default defineComponent({
       height: 15px;
 
       .icone {
+        color: black;
         width: 13px;
         height: 13px;
         font-weight: bold;

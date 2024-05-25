@@ -31,30 +31,36 @@ public class UtilisateurCollectionServiceTest {
     private UtilisateurCollectionService utilisateurCollectionService;
 
     @BeforeEach
-    public void beforeAll() {
+    public void beforeEach() {
         utilisateurCollectionService = new UtilisateurCollectionService(utilisateurCollectionRepository, new UtilisateurCollectionMapper());
     }
 
     @Test
     public void test_findAllIdsByUtilisateurId() {
+        // When
         List<UtilisateurCollectionDTO> res = utilisateurCollectionService.findAllIdsByUtilisateurId(1L);
 
+        // Then
         assertSame(2, res.size());
-        assertTrue(res.stream().map(UtilisateurCollectionDTO::getObjetCollectionId).toList().containsAll(Arrays.asList(1L, 3L)));
-        assertTrue(res.stream().map(UtilisateurCollectionDTO::getQuantite).toList().contains(1L));
+        assertTrue(res.stream().map(UtilisateurCollectionDTO::objetCollectionId).toList().containsAll(Arrays.asList(1L, 3L)));
+        assertTrue(res.stream().map(UtilisateurCollectionDTO::quantite).toList().contains(1L));
     }
 
     @Test
     public void test_findAllIdsByUtilisateurId_aucunResultat() {
+        // When
         List<UtilisateurCollectionDTO> res = utilisateurCollectionService.findAllIdsByUtilisateurId(2L);
 
+        // Then
         assertSame(0, res.size());
     }
 
     @Test
     public void test_findAllIdsByUtilisateurId_utilisateurInexistant() {
+        // When
         List<UtilisateurCollectionDTO> res = utilisateurCollectionService.findAllIdsByUtilisateurId(3L);
 
+        // Then
         assertSame(0, res.size());
     }
 }

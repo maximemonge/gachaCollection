@@ -10,9 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface UtilisateurRepository extends JpaRepository<UtilisateurEntity, Long> {
-
-    @Query("SELECT u FROM UtilisateurEntity u WHERE u.identifiant = :identifiant")
-    UtilisateurEntity getByIdentifiant(@Param("identifiant") String identifiant);
+    
+    UtilisateurEntity findByIdentifiant(@Param("identifiant") String identifiant);
 
     @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM UtilisateurEntity u WHERE u.identifiant = :identifiant")
     boolean isIdentifiantUtilise(@Param("identifiant") String identifiant);

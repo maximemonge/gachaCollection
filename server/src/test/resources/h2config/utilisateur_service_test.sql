@@ -1,1 +1,2 @@
-insert into UTILISATEUR (usr_identifiant, usr_mot_de_passe, usr_date_creation, usr_date_modification, usr_monnaie) values ('mmonge', '{bcrypt}$2a$10$8xQXCsc/12uJea/9b9.fBezUXOqJA.wgTxOu0XeRkdj4SKf3u8u4C', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 100);
+insert into UTILISATEUR (usr_id, usr_identifiant, usr_mot_de_passe, usr_date_creation, usr_date_modification, usr_monnaie) values (100, 'mmonge', '{bcrypt}$2a$10$8xQXCsc/12uJea/9b9.fBezUXOqJA.wgTxOu0XeRkdj4SKf3u8u4C', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 100);
+insert into UTILISATEUR (usr_id, usr_identifiant, usr_mot_de_passe, usr_date_creation, usr_date_modification, usr_monnaie) values (101, 'test_monnaie', '{bcrypt}$2a$10$8xQXCsc/12uJea/9b9.fBezUXOqJA.wgTxOu0XeRkdj4SKf3u8u4C', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 100);

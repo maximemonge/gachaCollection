@@ -5,7 +5,6 @@ import com.mmonge.game.gacha.mapper.UtilisateurMapper;
 import com.mmonge.game.gacha.model.dto.UtilisateurDTO;
 import com.mmonge.game.gacha.model.entity.UtilisateurEntity;
 import com.mmonge.game.gacha.services.repository.UtilisateurRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,11 +12,15 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 @Service
-@AllArgsConstructor
 public class UtilisateurService {
 
     private final UtilisateurRepository utilisateurRepository;
     private final UtilisateurMapper utilisateurMapper;
+
+    public UtilisateurService(UtilisateurRepository utilisateurRepository, UtilisateurMapper utilisateurMapper) {
+        this.utilisateurRepository = utilisateurRepository;
+        this.utilisateurMapper = utilisateurMapper;
+    }
 
     private final static PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
@@ -29,7 +32,7 @@ public class UtilisateurService {
      * @return UtilisateurDTO
      */
     public UtilisateurDTO login(String identifiant, String motDePasse) throws SecurityException {
-        UtilisateurEntity utilisateur = utilisateurRepository.getByIdentifiant(identifiant);
+        UtilisateurEntity utilisateur = utilisateurRepository.findByIdentifiant(identifiant);
         if (utilisateur != null && passwordEncoder.matches(motDePasse, utilisateur.getMotDePasse())) {
             return utilisateurMapper.utilisateurEntityToDto(utilisateur);
         } else {
@@ -65,6 +68,6 @@ public class UtilisateurService {
 
     public UtilisateurDTO ajouterMonnaie(Long utilisateurId, Long monnaie) {
         utilisateurRepository.ajouterMonnaie(utilisateurId, monnaie);
-        return utilisateurMapper.utilisateurEntityToDto(utilisateurRepository.findById(utilisateurId).orElse(null));
+        return utilisateurMapper.utilisateurEntityToDto(utilisateurRepository.findById(utilisateurId).orElseThrow());
     }
 }

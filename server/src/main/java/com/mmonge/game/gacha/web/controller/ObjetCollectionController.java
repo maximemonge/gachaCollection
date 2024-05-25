@@ -6,7 +6,6 @@ import com.mmonge.game.gacha.services.ObjetCollectionService;
 import com.mmonge.game.gacha.services.UtilisateurCollectionService;
 import com.mmonge.game.gacha.services.UtilisateurService;
 import com.mmonge.game.gacha.web.controller.cors.ControllerConfig;
-import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,16 +17,21 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/objetCollection")
-@AllArgsConstructor
 public class ObjetCollectionController extends ControllerConfig {
     private final ObjetCollectionService objetCollectionService;
     private final UtilisateurCollectionService utilisateurCollectionService;
     private final UtilisateurService utilisateurService;
 
+    public ObjetCollectionController(ObjetCollectionService objetCollectionService, UtilisateurCollectionService utilisateurCollectionService, UtilisateurService utilisateurService) {
+        this.objetCollectionService = objetCollectionService;
+        this.utilisateurCollectionService = utilisateurCollectionService;
+        this.utilisateurService = utilisateurService;
+    }
+
     @GetMapping(path = "/all")
     public @ResponseBody ResponseEntity<Map<String, List<ObjetCollectionDTO>>> getAllObjetCollection() {
-        TreeMap<String, List<ObjetCollectionDTO>> objetsParCategorie = new TreeMap<>(objetCollectionService.findAll().stream().collect(Collectors.groupingBy(ObjetCollectionDTO::getCategorie)));
-        objetsParCategorie.values().forEach(l -> l.sort(Comparator.comparing(ObjetCollectionDTO::getRarete)));
+        TreeMap<String, List<ObjetCollectionDTO>> objetsParCategorie = new TreeMap<>(objetCollectionService.findAll().stream().collect(Collectors.groupingBy(ObjetCollectionDTO::categorie)));
+        objetsParCategorie.values().forEach(l -> l.sort(Comparator.comparing(ObjetCollectionDTO::rarete)));
         return ResponseEntity.ok(objetsParCategorie);
     }
 
@@ -39,7 +43,7 @@ public class ObjetCollectionController extends ControllerConfig {
     @GetMapping(path = "/obtenir/user/{utilisateurId}/{cout}")
     public @ResponseBody ResponseEntity<ObjetCollectionDTO> obtenirUnObjet(@PathVariable Long utilisateurId, @PathVariable Long cout) {
         ObjetCollectionDTO objetAleatoire = objetCollectionService.obtenirUnObjet();
-        utilisateurCollectionService.ajouterObjetDansLaCollection(utilisateurId, objetAleatoire.getId());
+        utilisateurCollectionService.ajouterObjetDansLaCollection(utilisateurId, objetAleatoire.id());
         utilisateurService.retirerMonnaie(utilisateurId, cout);
         return ResponseEntity.ok(objetAleatoire);
     }

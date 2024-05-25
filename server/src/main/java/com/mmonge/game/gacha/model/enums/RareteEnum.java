@@ -1,14 +1,10 @@
 package com.mmonge.game.gacha.model.enums;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Comparator;
 
-@Getter
-@AllArgsConstructor
 public enum RareteEnum implements Comparator<RareteEnum> {
     C(1, "C", "Commun", 50000),
     S(2, "S", "Peu commun", 80000),
@@ -17,13 +13,19 @@ public enum RareteEnum implements Comparator<RareteEnum> {
     L(5, "L", "Légendaire", 99000),
     M(6, "M", "Mythique", 99999),
     F(7, "F", "Fantôme", 100000);
-
-
+    
     private final int ordre;
     private final String code;
     private final String libelle;
     private final int chance;
     private static final Logger LOGGER = LoggerFactory.getLogger(RareteEnum.class);
+
+    RareteEnum(int ordre, String code, String libelle, int chance) {
+        this.ordre = ordre;
+        this.code = code;
+        this.libelle = libelle;
+        this.chance = chance;
+    }
 
     public static RareteEnum get(String code) {
         RareteEnum rarete = null;
@@ -38,5 +40,21 @@ public enum RareteEnum implements Comparator<RareteEnum> {
     @Override
     public int compare(RareteEnum o1, RareteEnum o2) {
         return Integer.compare(o1.ordre, o2.ordre);
+    }
+
+    public int getOrdre() {
+        return ordre;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public int getChance() {
+        return chance;
     }
 }

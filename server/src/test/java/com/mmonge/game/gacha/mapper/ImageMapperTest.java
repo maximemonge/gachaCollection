@@ -15,30 +15,29 @@ public class ImageMapperTest {
     private ImageMapper imageMapper;
 
     @BeforeEach
-    public void beforeAll() {
+    public void beforeEach() {
         imageMapper = new ImageMapper();
     }
 
     @Test
     public void test_imageEntityToDto_ok() {
+        // Given
         ImageEntity entity = new ImageEntity();
         entity.setId(1L);
         entity.setDescription("Ariel");
         entity.setImage("Ariel.png");
 
+        // When
         ImageDTO dto = imageMapper.imageEntityToDto(entity);
 
-        assertSame(entity.getId(), dto.getId());
-        assertEquals(entity.getDescription(), dto.getDescription());
-        assertEquals(entity.getImage(), dto.getImage());
+        // Then
+        assertSame(entity.getId(), dto.id());
+        assertEquals(entity.getDescription(), dto.description());
+        assertEquals(entity.getImage(), dto.image());
     }
 
     @Test
     public void test_imageEntityToDto_null() {
-        ImageDTO dto = imageMapper.imageEntityToDto(null);
-
-        assertNull(dto.getId());
-        assertNull(dto.getDescription());
-        assertNull(dto.getImage());
+        assertThrows(NullPointerException.class, () -> imageMapper.imageEntityToDto(null));
     }
 }

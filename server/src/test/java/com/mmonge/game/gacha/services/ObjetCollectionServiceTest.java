@@ -37,25 +37,30 @@ public class ObjetCollectionServiceTest {
     private ObjetCollectionService objetCollectionService;
 
     @BeforeEach
-    public void beforeAll() {
+    public void beforeEach() {
         objetCollectionService = new ObjetCollectionService(objetCollectionRepository, new ObjetCollectionMapper(new ImageMapper()), rareteUtils);
     }
 
     @Test
     public void test_findAll() {
+        // When
         List<ObjetCollectionDTO> res = objetCollectionService.findAll();
 
+        // Then
         assertSame(3, res.size());
-        assertTrue(res.stream().map(ObjetCollectionDTO::getCode).toList().containsAll(Arrays.asList("Aladdin", "Ariel", "Jafar")));
-        assertTrue(res.stream().map(o -> o.getImage().getId()).toList().containsAll(Arrays.asList(1L, 2L, 3L)));
+        assertTrue(res.stream().map(ObjetCollectionDTO::code).toList().containsAll(Arrays.asList("Aladdin", "Ariel", "Jafar")));
+        assertTrue(res.stream().map(o -> o.image().id()).toList().containsAll(Arrays.asList(1L, 2L, 3L)));
     }
 
     @Test
     public void test_obtenirUnObjet() {
+        // Given
         Mockito.when(rareteUtils.getRareteAleatoire()).thenReturn(RareteEnum.M);
 
+        // When
         ObjetCollectionDTO res = objetCollectionService.obtenirUnObjet();
 
-        assertEquals("Jafar", res.getCode());
+        // Then
+        assertEquals("Jafar", res.code());
     }
 }

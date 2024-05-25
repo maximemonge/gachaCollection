@@ -14,14 +14,16 @@ public class AleatoireUtilsTest {
     private AleatoireUtils aleatoireUtils;
 
     @BeforeEach
-    public void beforeAll() {
+    public void beforeEach() {
         aleatoireUtils = new AleatoireUtils();
     }
 
     @Test
     public void test_genererNombreAleatoire() {
+        // When
         int res = aleatoireUtils.genererNombreAleatoire();
 
+        // Then
         assertTrue(res >= 0 && res <= RareteEnum.F.getChance());
     }
 }
